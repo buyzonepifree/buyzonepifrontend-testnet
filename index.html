@@ -1,15 +1,1631 @@
 <!DOCTYPE html>
-<html>
-<head><title>BuyZone Pi Testnet</title></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuyZone Pi — Pi Network Marketplace</title>
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0a1a;
+  --bg2: #130f24;
+  --bg3: #1a1530;
+  --card: #1e1838;
+  --card2: #251f42;
+  --border: #2e2850;
+  --purple: #7c3aed;
+  --purple2: #9d5cf5;
+  --purple3: #c084fc;
+  --gold: #f59e0b;
+  --gold2: #fbbf24;
+  --gold3: #fde68a;
+  --text: #f1eeff;
+  --text2: #a89ec0;
+  --text3: #6b6080;
+  --green: #10b981;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --radius: 14px;
+  --shadow: 0 8px 32px rgba(124,58,237,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg2); }
+::-webkit-scrollbar-thumb { background:var(--purple); border-radius:3px; }
+
+/* SECURITY BANNER */
+.sec-banner {
+  background: linear-gradient(90deg, #7c3aed22, #f59e0b22);
+  border-bottom: 1px solid var(--gold);
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--gold2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* NAVBAR */
+.nav {
+  background: rgba(13,10,26,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  background: linear-gradient(135deg, var(--purple2), var(--gold2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}
+.nav-right { display:flex; align-items:center; gap:12px; }
+.nav-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.nav-btn:hover { background:var(--card2); border-color:var(--purple); }
+.nav-btn.primary {
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border-color: transparent;
+  font-weight: 500;
+}
+.nav-btn.primary:hover { opacity:0.9; transform:translateY(-1px); }
+.notif-btn {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.notif-btn:hover { border-color:var(--purple); }
+.notif-dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: none;
+}
+.pi-price-ticker {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--gold2);
+  font-weight: 500;
+}
+
+/* PAGES */
+.page { display:none; }
+.page.active { display:block; }
+
+/* HOME / BROWSE */
+.hero {
+  background: linear-gradient(135deg, var(--bg2) 0%, #1a0d3a 50%, var(--bg2) 100%);
+  padding: 48px 20px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--text) 0%, var(--purple3) 50%, var(--gold2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+.hero p { color:var(--text2); font-size:16px; margin-bottom:24px; }
+.search-bar {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+}
+.search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  padding: 4px 8px;
+}
+.search-bar input::placeholder { color:var(--text3); }
+.search-bar button {
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* CATEGORIES */
+.categories {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.categories::-webkit-scrollbar { display:none; }
+.cat-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.cat-btn:hover, .cat-btn.active {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: white;
+}
+
+/* PRODUCTS GRID */
+.products-section { padding: 0 20px 80px; }
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+  animation: fadeIn 0.4s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--purple);
+  box-shadow: var(--shadow);
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.product-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--card2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  position: relative;
+}
+.product-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--purple);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.product-badge.digital { background: var(--blue); }
+.product-info { padding: 12px; }
+.product-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-seller { font-size: 11px; color:var(--text3); margin-bottom:8px; }
+.product-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold2);
+}
+.product-price span { font-size: 11px; font-family:'DM Sans'; color:var(--text3); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+.modal-overlay.active { display:flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px 20px;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
+.modal-handle {
+  width: 40px; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.modal-close {
+  float: right;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PRODUCT DETAIL */
+.product-detail-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--card);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  margin-bottom: 16px;
+}
+.detail-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--gold2);
+  margin-bottom: 8px;
+}
+.detail-seller {
+  color: var(--text2);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.detail-desc {
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.buy-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  border: none;
+  color: #1a0d00;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.buy-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(245,158,11,0.3); }
+.buy-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* SELL PAGE */
+.sell-form { padding: 20px; max-width: 600px; margin: 0 auto; }
+.form-group { margin-bottom: 16px; }
+.form-label { display:block; font-size:13px; color:var(--text2); margin-bottom:6px; font-weight:500; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--purple); }
+.form-select option { background:var(--bg2); }
+.form-textarea { resize:vertical; min-height:100px; }
+.emoji-picker {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+.emoji-option {
+  font-size: 24px;
+  text-align: center;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+.emoji-option:hover, .emoji-option.selected { border-color:var(--purple); background:var(--card2); }
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border: none;
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.2s;
+}
+.submit-btn:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+
+/* ORDERS PAGE */
+.orders-page { padding: 20px; }
+.tab-bar {
+  display: flex;
+  background: var(--card);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text2);
+  transition: all 0.2s;
+}
+.tab.active { background:var(--purple); color:white; font-weight:500; }
+.order-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.order-card:hover { border-color:var(--purple); }
+.order-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.order-title { font-weight:500; font-size:15px; }
+.status-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.status-paid { background:#1d4ed822; color:#60a5fa; border:1px solid #1d4ed8; }
+.status-shipped { background:#d97706222; color:#fbbf24; border:1px solid #d97706; }
+.status-completed { background:#065f4622; color:#34d399; border:1px solid #065f46; }
+.status-disputed { background:#7f1d1d22; color:#f87171; border:1px solid #7f1d1d; }
+.status-pending { background:#37415122; color:#9ca3af; border:1px solid #374151; }
+.order-meta { font-size:12px; color:var(--text3); }
+.order-amount { font-family:'Syne',sans-serif; font-weight:700; color:var(--gold2); font-size:16px; margin-top:8px; }
+
+/* CHAT */
+.chat-container { display:flex; flex-direction:column; height:60vh; }
+.chat-messages { flex:1; overflow-y:auto; padding:12px 0; display:flex; flex-direction:column; gap:8px; }
+.chat-msg {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.chat-msg.mine { align-self:flex-end; background:var(--purple); color:white; border-radius:14px 14px 4px 14px; }
+.chat-msg.theirs { align-self:flex-start; background:var(--card2); color:var(--text); border-radius:14px 14px 14px 4px; }
+.chat-msg-meta { font-size:10px; opacity:0.6; margin-top:4px; }
+.chat-input-row { display:flex; gap:8px; margin-top:12px; }
+.chat-input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+}
+.chat-input:focus { border-color:var(--purple); }
+.chat-send {
+  background: var(--purple);
+  border: none;
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* PROFILE PAGE */
+.profile-page { padding: 20px; }
+.profile-header {
+  background: linear-gradient(135deg, var(--card), var(--card2));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile-avatar {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 12px;
+}
+.profile-name { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; }
+.profile-kyc {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #065f4622;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num { font-family:'Syne',sans-serif; font-size:24px; font-weight:800; color:var(--gold2); }
+.stat-label { font-size:12px; color:var(--text3); margin-top:4px; }
+.menu-list { display:flex; flex-direction:column; gap:8px; }
+.menu-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.menu-item:hover { border-color:var(--purple); background:var(--card2); }
+.menu-icon { font-size:20px; }
+.menu-text { flex:1; font-size:15px; }
+.menu-arrow { color:var(--text3); }
+
+/* ADMIN */
+.admin-page { padding: 20px; }
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.admin-stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+.admin-stat-label { font-size:12px; color:var(--text3); margin-bottom:4px; }
+.admin-stat-val { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:var(--gold2); }
+
+/* BOTTOM NAV */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(13,10,26,0.97);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  z-index: 100;
+}
+.bnav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text3);
+  font-size: 11px;
+}
+.bnav-item.active { color:var(--purple2); }
+.bnav-icon { font-size: 22px; }
+.bnav-item.active .bnav-icon { transform:scale(1.1); }
+
+/* NOTIFICATIONS PANEL */
+.notif-panel {
+  position: fixed;
+  top: 64px; right: 16px;
+  width: 300px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  z-index: 150;
+  display: none;
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.2s ease;
+}
+.notif-panel.active { display:block; }
+.notif-panel-title { font-family:'Syne',sans-serif; font-weight:700; margin-bottom:12px; }
+.notif-item {
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--card);
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+/* LANG SELECTOR */
+.lang-select {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* LOADING */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--text3);
+  flex-direction: column;
+  gap: 12px;
+}
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--purple);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text3);
+}
+.empty-state .emoji { font-size: 48px; margin-bottom: 12px; }
+.empty-state p { font-size: 15px; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--card2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  z-index: 999;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-color:var(--green); color:var(--green); }
+.toast.error { border-color:var(--red); color:var(--red); }
+
+/* CONFIRM DIALOG */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.confirm-overlay.active { display:flex; }
+.confirm-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+}
+.confirm-box h3 { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; margin-bottom:8px; }
+.confirm-box p { color:var(--text2); font-size:14px; margin-bottom:20px; }
+.confirm-btns { display:flex; gap:10px; }
+.confirm-btns button { flex:1; padding:12px; border-radius:10px; cursor:pointer; font-size:14px; font-weight:600; border:none; font-family:'DM Sans',sans-serif; }
+.confirm-cancel { background:var(--card); color:var(--text); border:1px solid var(--border) !important; }
+.confirm-ok { background:var(--red); color:white; }
+
+/* LOGIN PAGE */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.2) 0%, var(--bg) 60%);
+}
+.login-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--purple2), var(--gold2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.login-tagline { color:var(--text2); font-size:16px; margin-bottom:40px; text-align:center; }
+.login-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+.login-card h2 { font-family:'Syne',sans-serif; font-size:22px; font-weight:700; margin-bottom:8px; }
+.login-card p { color:var(--text2); font-size:14px; margin-bottom:24px; line-height:1.5; }
+.pi-login-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--purple), var(--purple2));
+  border: none;
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.pi-login-btn:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(124,58,237,0.4); }
+.login-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+  text-align: left;
+}
+.login-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text2);
+}
+.feature-check { color:var(--green); font-size:16px; }
+</style>
+</head>
 <body>
-<h1>BuyZone Pi Testnet</h1>
-<p>Coming soon...</p>
+
+<!-- SECURITY BANNER -->
+<div class="sec-banner">
+  🔒 BuyZone Pi will NEVER ask for your seed phrase or private key. All payments go through Pi Browser only.
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-page">
+  <div class="login-logo">π BuyZone</div>
+  <div class="login-tagline">The Pi Network Peer-to-Peer Marketplace</div>
+  <div class="login-card">
+    <h2>Welcome, Pioneer!</h2>
+    <p>Sign in with your Pi account to start buying and selling with real Pi cryptocurrency.</p>
+    <button class="pi-login-btn" onclick="loginWithPi()">
+      <span>π</span> Login with Pi
+    </button>
+    <div class="login-features">
+      <div class="login-feature"><span class="feature-check">✓</span> Escrow-protected payments</div>
+      <div class="login-feature"><span class="feature-check">✓</span> KYC-verified sellers</div>
+      <div class="login-feature"><span class="feature-check">✓</span> Buyer-seller chat</div>
+      <div class="login-feature"><span class="feature-check">✓</span> Dispute resolution</div>
+      <div class="login-feature"><span class="feature-check">✓</span> Only 2% commission</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" style="display:none;">
+
+<!-- NAVBAR -->
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('browse')">π BuyZone</div>
+  <div class="nav-right">
+    <div class="pi-price-ticker" id="piPriceTicker">π = $0.00</div>
+    <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
+      <option value="en">🌐 EN</option>
+      <option value="ta">தமிழ்</option>
+      <option value="hi">हिंदी</option>
+      <option value="zh">中文</option>
+      <option value="es">Español</option>
+      <option value="ar">عربي</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="pt">Português</option>
+      <option value="ru">Русский</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+      <option value="id">Bahasa</option>
+      <option value="tr">Türkçe</option>
+      <option value="vi">Tiếng Việt</option>
+    </select>
+    <button class="notif-btn" onclick="toggleNotif()">
+      🔔
+      <div class="notif-dot" id="notifDot"></div>
+    </button>
+  </div>
+</nav>
+
+<!-- NOTIFICATIONS PANEL -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-panel-title">🔔 Notifications</div>
+  <div id="notifList">
+    <div class="notif-item">Welcome to BuyZone Pi! 🎉 Start exploring products.</div>
+  </div>
+</div>
+
+<!-- BROWSE PAGE -->
+<div id="browsePage" class="page active">
+  <div class="hero">
+    <h1 id="heroTitle">Buy & Sell with Pi</h1>
+    <p id="heroSubtitle">The world's first Pi Network peer-to-peer marketplace</p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search products..." oninput="searchProducts()">
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+  </div>
+  <div class="categories" id="categoriesBar"></div>
+  <div class="products-section">
+    <div class="section-title" id="sectionTitle">🔥 Latest Products</div>
+    <div class="products-grid" id="productsGrid">
+      <div class="loading"><div class="spinner"></div><span>Loading products...</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SELL PAGE -->
+<div id="sellPage" class="page">
+  <div class="sell-form">
+    <div class="section-title" style="margin-bottom:20px;">📦 List a Product</div>
+    <div class="form-group">
+      <label class="form-label">Product Icon</label>
+      <div class="emoji-picker" id="emojiPicker"></div>
+      <input type="hidden" id="selectedEmoji" value="📦">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Title *</label>
+      <input class="form-input" id="prodTitle" placeholder="What are you selling?">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description *</label>
+      <textarea class="form-textarea" id="prodDesc" placeholder="Describe your product in detail..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category *</label>
+      <select class="form-select" id="prodCategory">
+        <option value="">Select category</option>
+        <option value="electronics">📱 Electronics</option>
+        <option value="fashion">👗 Fashion</option>
+        <option value="food">🍕 Food & Drinks</option>
+        <option value="services">🛠️ Services</option>
+        <option value="digital">💻 Digital Products</option>
+        <option value="art">🎨 Art & Crafts</option>
+        <option value="books">📚 Books</option>
+        <option value="gaming">🎮 Gaming</option>
+        <option value="health">💊 Health</option>
+        <option value="home">🏠 Home & Garden</option>
+        <option value="sports">⚽ Sports</option>
+        <option value="other">📦 Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Type</label>
+      <select class="form-select" id="prodType">
+        <option value="physical">📦 Physical Product</option>
+        <option value="digital">💻 Digital Product</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Price (Pi) *</label>
+      <input class="form-input" id="prodPrice" type="number" step="0.01" min="0.01" placeholder="e.g. 10.5">
+    </div>
+    <button class="submit-btn" onclick="listProduct()">🚀 List Product</button>
+  </div>
+</div>
+
+<!-- ORDERS PAGE -->
+<div id="ordersPage" class="page">
+  <div class="orders-page">
+    <div class="section-title">📋 My Orders</div>
+    <div class="tab-bar">
+      <div class="tab active" onclick="switchOrderTab('buying', this)">Buying</div>
+      <div class="tab" onclick="switchOrderTab('selling', this)">Selling</div>
+    </div>
+    <div id="ordersList">
+      <div class="loading"><div class="spinner"></div><span>Loading orders...</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PAGE -->
+<div id="profilePage" class="page">
+  <div class="profile-page">
+    <div class="profile-header">
+      <div class="profile-avatar">👤</div>
+      <div class="profile-name" id="profileName">@pioneer</div>
+      <div id="profileKYC" class="profile-kyc" style="display:none;">✓ KYC Verified</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="statBuying">0</div><div class="stat-label">Purchases</div></div>
+      <div class="stat-card"><div class="stat-num" id="statSelling">0</div><div class="stat-label">Sales</div></div>
+      <div class="stat-card"><div class="stat-num" id="statPiEarned">0π</div><div class="stat-label">Earned</div></div>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item" onclick="showPage('orders')">
+        <span class="menu-icon">📋</span>
+        <span class="menu-text">My Orders</span>
+        <span class="menu-arrow">›</span>
+      </div>
+      <div class="menu-item" onclick="showPage('sell')">
+        <span class="menu-icon">📦</span>
+        <span class="menu-text">List a Product</span>
+        <span class="menu-arrow">›</span>
+      </div>
+      <div class="menu-item" id="adminMenuItem" style="display:none;" onclick="showAdminLogin()">
+        <span class="menu-icon">⚙️</span>
+        <span class="menu-text">Admin Dashboard</span>
+        <span class="menu-arrow">›</span>
+      </div>
+      <div class="menu-item" onclick="confirmLogout()">
+        <span class="menu-icon">🚪</span>
+        <span class="menu-text">Logout</span>
+        <span class="menu-arrow">›</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="adminPage" class="page">
+  <div class="admin-page">
+    <div class="section-title">⚙️ Admin Dashboard</div>
+    <div class="admin-stats" id="adminStats">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+    <div class="section-title" style="margin-top:20px;">📋 Recent Orders</div>
+    <div id="adminOrders"></div>
+    <div class="section-title" style="margin-top:20px;">⚠️ Open Disputes</div>
+    <div id="adminDisputes"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bnav-item active" id="bnav-browse" onclick="showPage('browse')">
+    <div class="bnav-icon">🏠</div>
+    <span>Home</span>
+  </div>
+  <div class="bnav-item" id="bnav-sell" onclick="showPage('sell')">
+    <div class="bnav-icon">➕</div>
+    <span>Sell</span>
+  </div>
+  <div class="bnav-item" id="bnav-orders" onclick="showPage('orders')">
+    <div class="bnav-icon">📋</div>
+    <span>Orders</span>
+  </div>
+  <div class="bnav-item" id="bnav-profile" onclick="showPage('profile')">
+    <div class="bnav-icon">👤</div>
+    <span>Profile</span>
+  </div>
+</nav>
+
+</div><!-- end mainApp -->
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('productModal')">✕</button>
+    <div id="productModalContent"></div>
+  </div>
+</div>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('orderModal')">✕</button>
+    <div id="orderModalContent"></div>
+  </div>
+</div>
+
+<!-- CONFIRM DIALOG -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmMsg">This action cannot be undone.</p>
+    <div class="confirm-btns">
+      <button class="confirm-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="confirm-ok" id="confirmOkBtn" onclick="closeConfirm()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const BACKEND = 'https://buyzonepii-backend-2.onrender.com';
+const ADMIN_USERNAME = 'kanthn005'; // your Pi username
+const VERSION = 'v1.0';
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentUser = null;
+let currentPage = 'browse';
+let allProducts = [];
+let currentCategory = 'all';
+let orderTab = 'buying';
+let selectedEmoji = '📦';
+let notifications = [];
+let isAdmin = false;
+
+// ─── LANGUAGES ────────────────────────────────────────────────────────────────
+const langs = {
+  en: { heroTitle:'Buy & Sell with Pi', heroSubtitle:'The world\'s first Pi Network peer-to-peer marketplace', sectionTitle:'🔥 Latest Products' },
+  ta: { heroTitle:'பையில் வாங்கவும் விற்கவும்', heroSubtitle:'உலகின் முதல் Pi நெட்வொர்க் சந்தை', sectionTitle:'🔥 சமீபத்திய தயாரிப்புகள்' },
+  hi: { heroTitle:'Pi से खरीदें और बेचें', heroSubtitle:'दुनिया का पहला Pi Network मार्केटप्लेस', sectionTitle:'🔥 नवीनतम उत्पाद' },
+  zh: { heroTitle:'用Pi买卖商品', heroSubtitle:'全球首个Pi网络点对点市场', sectionTitle:'🔥 最新商品' },
+  es: { heroTitle:'Compra y Vende con Pi', heroSubtitle:'El primer mercado P2P de Pi Network', sectionTitle:'🔥 Últimos Productos' },
+  ar: { heroTitle:'اشتر وبع بـ Pi', heroSubtitle:'أول سوق P2P في شبكة Pi', sectionTitle:'🔥 أحدث المنتجات' },
+  fr: { heroTitle:'Achetez et Vendez avec Pi', heroSubtitle:'Le premier marché P2P Pi Network', sectionTitle:'🔥 Derniers Produits' },
+  de: { heroTitle:'Kaufen & Verkaufen mit Pi', heroSubtitle:'Der erste Pi Network P2P Marktplatz', sectionTitle:'🔥 Neueste Produkte' },
+  pt: { heroTitle:'Compre e Venda com Pi', heroSubtitle:'O primeiro marketplace P2P da Pi Network', sectionTitle:'🔥 Produtos Recentes' },
+  ru: { heroTitle:'Покупай и продавай за Pi', heroSubtitle:'Первый P2P маркетплейс Pi Network', sectionTitle:'🔥 Новые товары' },
+  ja: { heroTitle:'Piで売買しよう', heroSubtitle:'世界初のPiネットワークP2Pマーケット', sectionTitle:'🔥 最新商品' },
+  ko: { heroTitle:'Pi로 사고 팔기', heroSubtitle:'세계 최초 Pi Network P2P 마켓플레이스', sectionTitle:'🔥 최신 상품' },
+  id: { heroTitle:'Beli & Jual dengan Pi', heroSubtitle:'Marketplace P2P Pi Network pertama', sectionTitle:'🔥 Produk Terbaru' },
+  tr: { heroTitle:'Pi ile Al & Sat', heroSubtitle:'Dünyanın ilk Pi Network P2P pazarı', sectionTitle:'🔥 Son Ürünler' },
+  vi: { heroTitle:'Mua & Bán với Pi', heroSubtitle:'Sàn giao dịch P2P Pi Network đầu tiên', sectionTitle:'🔥 Sản phẩm mới' },
+};
+
+const categories = [
+  { id:'all', label:'🌟 All' },
+  { id:'electronics', label:'📱 Electronics' },
+  { id:'fashion', label:'👗 Fashion' },
+  { id:'food', label:'🍕 Food' },
+  { id:'services', label:'🛠️ Services' },
+  { id:'digital', label:'💻 Digital' },
+  { id:'art', label:'🎨 Art' },
+  { id:'books', label:'📚 Books' },
+  { id:'gaming', label:'🎮 Gaming' },
+  { id:'health', label:'💊 Health' },
+  { id:'home', label:'🏠 Home' },
+  { id:'sports', label:'⚽ Sports' },
+  { id:'other', label:'📦 Other' },
+];
+
+const emojis = ['📱','💻','👗','👟','🎮','📚','🎨','🏠','🍕','💊','⚽','🎵','📷','🔧','💎','🌿','🧸','🎁','🖥️','⌚','🎧','📦','🛍️','🌟'];
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.onload = async () => {
+  Pi.init({ version: '2.0', sandbox: true });
+  buildCategories();
+  buildEmojiPicker();
+  fetchPiPrice();
+  setInterval(fetchPiPrice, 60000);
+};
+
+// ─── PI LOGIN ─────────────────────────────────────────────────────────────────
+async function loginWithPi() {
+  try {
+    const scopes = ['username', 'payments', 'wallet_address'];
+    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+    currentUser = {
+      piUsername: auth.user.username,
+      piUid: auth.user.uid,
+      isKYC: auth.user.credentials?.verified || false,
+    };
+    // Register user in backend
+    await fetch(`${BACKEND}/auth`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentUser)
+    });
+    // Show admin menu if admin
+    if (currentUser.piUsername === ADMIN_USERNAME) {
+      isAdmin = true;
+      document.getElementById('adminMenuItem').style.display = 'flex';
+    }
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    updateProfile();
+    loadProducts();
+    addNotif('Welcome back, @' + currentUser.piUsername + '! 👋');
+  } catch (err) {
+    showToast('Login failed: ' + err.message, 'error');
+  }
+}
+
+// ─── INCOMPLETE PAYMENT HANDLER ───────────────────────────────────────────────
+async function onIncompletePaymentFound(payment) {
+  try {
+    await fetch(`${BACKEND}/payments/complete`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ paymentId: payment.identifier, txid: payment.transaction?.txid })
+    });
+  } catch (e) {}
+}
+
+// ─── PRODUCTS ─────────────────────────────────────────────────────────────────
+async function loadProducts() {
+  document.getElementById('productsGrid').innerHTML = '<div class="loading"><div class="spinner"></div><span>Loading...</span></div>';
+  try {
+    let url = `${BACKEND}/products?category=${currentCategory}`;
+    const search = document.getElementById('searchInput')?.value;
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+    const res = await fetch(url);
+    allProducts = await res.json();
+    renderProducts(allProducts);
+  } catch (err) {
+    document.getElementById('productsGrid').innerHTML = '<div class="empty-state"><div class="emoji">😕</div><p>Failed to load products</p></div>';
+  }
+}
+
+function renderProducts(products) {
+  const grid = document.getElementById('productsGrid');
+  if (!products.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="emoji">🛍️</div><p>No products found. Be the first to sell!</p></div>';
+    return;
+  }
+  grid.innerHTML = products.map(p => `
+    <div class="product-card" onclick="openProduct('${p._id}')">
+      <div class="product-img">
+        ${p.images[0] || '📦'}
+        <div class="product-badge ${p.type === 'digital' ? 'digital' : ''}">${p.type === 'digital' ? '💻' : '📦'}</div>
+      </div>
+      <div class="product-info">
+        <div class="product-title">${escHtml(p.title)}</div>
+        <div class="product-seller">@${escHtml(p.sellerUsername)}</div>
+        <div class="product-price">π ${p.price.toFixed(2)} <span>Pi</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function searchProducts() {
+  loadProducts();
+}
+
+function buildCategories() {
+  document.getElementById('categoriesBar').innerHTML = categories.map(c => `
+    <button class="cat-btn ${c.id === 'all' ? 'active' : ''}" onclick="filterCategory('${c.id}', this)">${c.label}</button>
+  `).join('');
+}
+
+function filterCategory(cat, el) {
+  currentCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  loadProducts();
+}
+
+// ─── PRODUCT DETAIL ───────────────────────────────────────────────────────────
+async function openProduct(id) {
+  const p = allProducts.find(x => x._id === id);
+  if (!p) return;
+  const isMine = currentUser && p.sellerId === currentUser.piUid;
+  document.getElementById('productModalContent').innerHTML = `
+    <div class="product-detail-img">${p.images[0] || '📦'}</div>
+    <div class="modal-title">${escHtml(p.title)}</div>
+    <div class="detail-price">π ${p.price.toFixed(2)}</div>
+    <div class="detail-seller">by @${escHtml(p.sellerUsername)} · ${p.type === 'digital' ? '💻 Digital' : '📦 Physical'}</div>
+    <div class="detail-desc">${escHtml(p.description)}</div>
+    ${!isMine ? `<button class="buy-btn" id="buyBtn" onclick="buyProduct('${p._id}', '${escHtml(p.title)}', ${p.price}, '${p.sellerId}', '${escHtml(p.sellerUsername)}')">
+      🛒 Buy for π ${p.price.toFixed(2)}
+    </button>` : `<button class="nav-btn" style="width:100%;padding:14px;" onclick="deleteProduct('${p._id}')">🗑️ Delete Listing</button>`}
+  `;
+  openModal('productModal');
+}
+
+async function deleteProduct(id) {
+  await fetch(`${BACKEND}/products/${id}`, { method: 'DELETE' });
+  closeModal('productModal');
+  loadProducts();
+  showToast('Product deleted ✓', 'success');
+}
+
+// ─── BUY (PI PAYMENT) ─────────────────────────────────────────────────────────
+async function buyProduct(productId, productTitle, amount, sellerId, sellerUsername) {
+  if (!currentUser) { showToast('Please login first', 'error'); return; }
+  const btn = document.getElementById('buyBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Processing...';
+  try {
+    const payment = await Pi.createPayment({
+      amount: amount,
+      memo: `BuyZone Pi: ${productTitle}`,
+      metadata: { productId, sellerId, sellerUsername, buyerId: currentUser.piUid, buyerUsername: currentUser.piUsername, productTitle }
+    }, {
+      onReadyForServerApproval: async (paymentId) => {
+        await fetch(`${BACKEND}/payments/approve`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ paymentId, productId, productTitle, buyerId: currentUser.piUid, buyerUsername: currentUser.piUsername, sellerId, sellerUsername, amount })
+        });
+      },
+      onReadyForServerCompletion: async (paymentId, txid) => {
+        await fetch(`${BACKEND}/payments/complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ paymentId, txid })
+        });
+        closeModal('productModal');
+        showToast('Payment successful! Order created 🎉', 'success');
+        addNotif(`You purchased "${productTitle}" for π ${amount}`);
+        showPage('orders');
+      },
+      onCancel: (paymentId) => {
+        btn.disabled = false;
+        btn.textContent = `🛒 Buy for π ${amount}`;
+        showToast('Payment cancelled', 'error');
+      },
+      onError: (error, payment) => {
+        btn.disabled = false;
+        btn.textContent = `🛒 Buy for π ${amount}`;
+        showToast('Payment error: ' + error.message, 'error');
+      }
+    });
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = `🛒 Buy for π ${amount}`;
+    showToast('Error: ' + err.message, 'error');
+  }
+}
+
+// ─── SELL ─────────────────────────────────────────────────────────────────────
+async function listProduct() {
+  const title = document.getElementById('prodTitle').value.trim();
+  const desc = document.getElementById('prodDesc').value.trim();
+  const category = document.getElementById('prodCategory').value;
+  const type = document.getElementById('prodType').value;
+  const price = parseFloat(document.getElementById('prodPrice').value);
+  if (!title || !desc || !category || !price) { showToast('Please fill all fields', 'error'); return; }
+  if (!currentUser) { showToast('Please login first', 'error'); return; }
+  try {
+    await fetch(`${BACKEND}/products`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title, description: desc, category, type, price,
+        sellerId: currentUser.piUid,
+        sellerUsername: currentUser.piUsername,
+        images: [selectedEmoji]
+      })
+    });
+    showToast('Product listed successfully! 🎉', 'success');
+    document.getElementById('prodTitle').value = '';
+    document.getElementById('prodDesc').value = '';
+    document.getElementById('prodPrice').value = '';
+    addNotif(`Your product "${title}" is now live!`);
+    showPage('browse');
+    loadProducts();
+  } catch (err) {
+    showToast('Failed to list product', 'error');
+  }
+}
+
+// ─── ORDERS ───────────────────────────────────────────────────────────────────
+async function loadOrders() {
+  if (!currentUser) return;
+  document.getElementById('ordersList').innerHTML = '<div class="loading"><div class="spinner"></div><span>Loading...</span></div>';
+  try {
+    const endpoint = orderTab === 'buying' ? 'buyer' : 'seller';
+    const res = await fetch(`${BACKEND}/orders/${endpoint}/${currentUser.piUid}`);
+    const orders = await res.json();
+    if (!orders.length) {
+      document.getElementById('ordersList').innerHTML = '<div class="empty-state"><div class="emoji">📭</div><p>No orders yet</p></div>';
+      return;
+    }
+    document.getElementById('ordersList').innerHTML = orders.map(o => `
+      <div class="order-card" onclick="openOrder('${o._id}')">
+        <div class="order-header">
+          <div class="order-title">${escHtml(o.productTitle)}</div>
+          <div class="status-badge status-${o.status}">${o.status}</div>
+        </div>
+        <div class="order-meta">${orderTab === 'buying' ? 'From @' + escHtml(o.sellerUsername) : 'To @' + escHtml(o.buyerUsername)} · ${new Date(o.createdAt).toLocaleDateString()}</div>
+        <div class="order-amount">π ${o.amount.toFixed(2)}</div>
+      </div>
+    `).join('');
+  } catch (err) {
+    document.getElementById('ordersList').innerHTML = '<div class="empty-state"><div class="emoji">😕</div><p>Failed to load orders</p></div>';
+  }
+}
+
+function switchOrderTab(tab, el) {
+  orderTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  loadOrders();
+}
+
+async function openOrder(id) {
+  try {
+    const res = await fetch(`${BACKEND}/orders/${id}`);
+    const order = await res.json();
+    const isBuyer = currentUser.piUid === order.buyerId;
+    const msgs = await fetch(`${BACKEND}/messages/${id}`).then(r => r.json());
+    document.getElementById('orderModalContent').innerHTML = `
+      <div class="modal-title">${escHtml(order.productTitle)}</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+        <span class="status-badge status-${order.status}">${order.status}</span>
+        <span style="color:var(--gold2);font-weight:700;">π ${order.amount.toFixed(2)}</span>
+      </div>
+      <div style="color:var(--text2);font-size:13px;margin-bottom:16px;">
+        Buyer: @${escHtml(order.buyerUsername)} · Seller: @${escHtml(order.sellerUsername)}
+      </div>
+      ${order.status === 'paid' && !isBuyer ? `<button class="submit-btn" style="margin-bottom:12px;" onclick="shipOrder('${id}')">📦 Mark as Shipped</button>` : ''}
+      ${order.status === 'shipped' && isBuyer ? `<button class="buy-btn" style="margin-bottom:12px;" onclick="confirmDelivery('${id}')">✅ Confirm Delivery</button>` : ''}
+      ${order.status !== 'completed' && order.status !== 'disputed' ? `<button class="nav-btn" style="width:100%;margin-bottom:16px;color:var(--red);" onclick="raiseDispute('${id}')">⚠️ Raise Dispute</button>` : ''}
+      <div style="font-weight:600;margin-bottom:8px;">💬 Chat</div>
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMsgs">
+          ${msgs.map(m => `
+            <div class="chat-msg ${m.senderId === currentUser.piUid ? 'mine' : 'theirs'}">
+              ${escHtml(m.text)}
+              <div class="chat-msg-meta">@${escHtml(m.senderUsername)}</div>
+            </div>
+          `).join('') || '<div style="color:var(--text3);text-align:center;padding:20px;">No messages yet. Say hi!</div>'}
+        </div>
+        <div class="chat-input-row">
+          <input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMsg('${id}')">
+          <button class="chat-send" onclick="sendMsg('${id}')">➤</button>
+        </div>
+      </div>
+    `;
+    openModal('orderModal');
+    const chatMsgs = document.getElementById('chatMsgs');
+    if (chatMsgs) chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  } catch (err) {
+    showToast('Failed to load order', 'error');
+  }
+}
+
+async function shipOrder(id) {
+  await fetch(`${BACKEND}/orders/${id}/ship`, { method: 'POST' });
+  closeModal('orderModal');
+  showToast('Marked as shipped! 📦', 'success');
+  loadOrders();
+}
+
+async function confirmDelivery(id) {
+  await fetch(`${BACKEND}/orders/${id}/confirm`, { method: 'POST' });
+  closeModal('orderModal');
+  showToast('Delivery confirmed! Pi released to seller ✅', 'success');
+  loadOrders();
+}
+
+async function raiseDispute(id) {
+  const reason = prompt('Please describe the issue:');
+  if (!reason) return;
+  await fetch(`${BACKEND}/disputes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ orderId: id, raisedBy: currentUser.piUsername, reason })
+  });
+  closeModal('orderModal');
+  showToast('Dispute raised. Admin will review. ⚠️', 'success');
+  loadOrders();
+}
+
+async function sendMsg(orderId) {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  await fetch(`${BACKEND}/messages`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ orderId, senderId: currentUser.piUid, senderUsername: currentUser.piUsername, text })
+  });
+  openOrder(orderId);
+}
+
+// ─── PROFILE ──────────────────────────────────────────────────────────────────
+async function updateProfile() {
+  if (!currentUser) return;
+  document.getElementById('profileName').textContent = '@' + currentUser.piUsername;
+  if (currentUser.isKYC) document.getElementById('profileKYC').style.display = 'inline-flex';
+  try {
+    const [buyRes, sellRes] = await Promise.all([
+      fetch(`${BACKEND}/orders/buyer/${currentUser.piUid}`),
+      fetch(`${BACKEND}/orders/seller/${currentUser.piUid}`)
+    ]);
+    const buys = await buyRes.json();
+    const sells = await sellRes.json();
+    document.getElementById('statBuying').textContent = buys.length;
+    document.getElementById('statSelling').textContent = sells.length;
+    const earned = sells.filter(o => o.status === 'completed').reduce((s, o) => s + o.amount * 0.98, 0);
+    document.getElementById('statPiEarned').textContent = earned.toFixed(1) + 'π';
+  } catch {}
+}
+
+// ─── ADMIN ────────────────────────────────────────────────────────────────────
+async function showAdminLogin() {
+  const pw = prompt('Admin password:');
+  if (!pw) return;
+  try {
+    const res = await fetch(`${BACKEND}/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (res.ok) {
+      showPage('admin');
+      loadAdminData();
+    } else {
+      showToast('Wrong password', 'error');
+    }
+  } catch { showToast('Error', 'error'); }
+}
+
+async function loadAdminData() {
+  try {
+    const [stats, orders, disputes] = await Promise.all([
+      fetch(`${BACKEND}/admin/stats`).then(r => r.json()),
+      fetch(`${BACKEND}/admin/orders`).then(r => r.json()),
+      fetch(`${BACKEND}/admin/disputes`).then(r => r.json()),
+    ]);
+    document.getElementById('adminStats').innerHTML = `
+      <div class="admin-stat"><div class="admin-stat-label">Total Users</div><div class="admin-stat-val">${stats.users}</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Products</div><div class="admin-stat-val">${stats.products}</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Orders</div><div class="admin-stat-val">${stats.orders}</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Revenue (π)</div><div class="admin-stat-val">${(stats.totalRevenue * 0.02).toFixed(2)}</div></div>
+    `;
+    document.getElementById('adminOrders').innerHTML = orders.slice(0, 10).map(o => `
+      <div class="order-card">
+        <div class="order-header">
+          <div class="order-title">${escHtml(o.productTitle)}</div>
+          <div class="status-badge status-${o.status}">${o.status}</div>
+        </div>
+        <div class="order-meta">@${escHtml(o.buyerUsername)} → @${escHtml(o.sellerUsername)}</div>
+        <div class="order-amount">π ${o.amount.toFixed(2)}</div>
+      </div>
+    `).join('') || '<div class="empty-state"><div class="emoji">📭</div><p>No orders yet</p></div>';
+    document.getElementById('adminDisputes').innerHTML = disputes.filter(d => d.status === 'open').map(d => `
+      <div class="order-card">
+        <div class="order-header">
+          <div class="order-title">Order Dispute</div>
+          <span class="status-badge status-disputed">open</span>
+        </div>
+        <div class="order-meta">By @${escHtml(d.raisedBy)}: ${escHtml(d.reason)}</div>
+        <button class="nav-btn" style="margin-top:8px;" onclick="resolveDispute('${d._id}')">✅ Resolve</button>
+      </div>
+    `).join('') || '<div class="empty-state"><div class="emoji">✅</div><p>No open disputes</p></div>';
+  } catch { showToast('Failed to load admin data', 'error'); }
+}
+
+async function resolveDispute(id) {
+  await fetch(`${BACKEND}/admin/disputes/${id}/resolve`, { method: 'POST' });
+  showToast('Dispute resolved ✅', 'success');
+  loadAdminData();
+}
+
+// ─── PI PRICE ─────────────────────────────────────────────────────────────────
+async function fetchPiPrice() {
+  try {
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pi-network&vs_currencies=usd,inr,eur,gbp,jpy');
+    const data = await res.json();
+    const usd = data['pi-network']?.usd || 0;
+    document.getElementById('piPriceTicker').textContent = `π = $${usd.toFixed(3)}`;
+  } catch {
+    document.getElementById('piPriceTicker').textContent = `π BuyZone ${VERSION}`;
+  }
+}
+
+// ─── UI HELPERS ───────────────────────────────────────────────────────────────
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+  const pageMap = { browse:'browsePage', sell:'sellPage', orders:'ordersPage', profile:'profilePage', admin:'adminPage' };
+  const navMap = { browse:'bnav-browse', sell:'bnav-sell', orders:'bnav-orders', profile:'bnav-profile' };
+  document.getElementById(pageMap[page])?.classList.add('active');
+  if (navMap[page]) document.getElementById(navMap[page])?.classList.add('active');
+  currentPage = page;
+  if (page === 'orders') loadOrders();
+  if (page === 'profile') updateProfile();
+  if (page === 'browse') loadProducts();
+  window.scrollTo(0, 0);
+}
+
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function addNotif(msg) {
+  notifications.unshift(msg);
+  document.getElementById('notifDot').style.display = 'block';
+  const list = document.getElementById('notifList');
+  list.innerHTML = notifications.slice(0, 5).map(n => `<div class="notif-item">${n}</div>`).join('');
+}
+
+function toggleNotif() {
+  document.getElementById('notifPanel').classList.toggle('active');
+  document.getElementById('notifDot').style.display = 'none';
+}
+
+function changeLang(lang) {
+  const t = langs[lang] || langs.en;
+  document.getElementById('heroTitle').textContent = t.heroTitle;
+  document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
+  document.getElementById('sectionTitle').textContent = t.sectionTitle;
+}
+
+function buildEmojiPicker() {
+  document.getElementById('emojiPicker').innerHTML = emojis.map(e => `
+    <div class="emoji-option ${e === '📦' ? 'selected' : ''}" onclick="selectEmoji('${e}', this)">${e}</div>
+  `).join('');
+}
+
+function selectEmoji(emoji, el) {
+  selectedEmoji = emoji;
+  document.getElementById('selectedEmoji').value = emoji;
+  document.querySelectorAll('.emoji-option').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function confirmLogout() {
+  document.getElementById('confirmTitle').textContent = 'Logout?';
+  document.getElementById('confirmMsg').textContent = 'Are you sure you want to logout from BuyZone Pi?';
+  document.getElementById('confirmOkBtn').onclick = () => { closeConfirm(); doLogout(); };
+  document.getElementById('confirmOverlay').classList.add('active');
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('loginPage').style.display = 'flex';
+}
+
+function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('active'); }
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+});
+
+// Close notif panel on outside click
+document.addEventListener('click', e => {
+  const panel = document.getElementById('notifPanel');
+  if (!panel.contains(e.target) && !e.target.closest('.notif-btn')) {
+    panel.classList.remove('active');
+  }
+});
+</script>
 </body>
 </html>
-```
-
-5. Click **"Commit changes"**
-6. Wait **2 minutes**
-7. Then go back to Pi Browser and try entering the URL again:
-```
-https://buyzonepifree.github.io/buyzonepifrontend-testnet/
