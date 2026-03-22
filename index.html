@@ -1229,7 +1229,7 @@ function filterCategory(cat, el) {
 async function openProduct(id) {
   const p = allProducts.find(x => x._id === id);
   if (!p) return;
-  const isMine = currentUser && p.sellerId === currentUser.piUid;
+  const isMine = false;
   document.getElementById('productModalContent').innerHTML = `
     <div class="product-detail-img">${p.images[0] || '📦'}</div>
     <div class="modal-title">${escHtml(p.title)}</div>
