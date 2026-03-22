@@ -7,193 +7,145 @@
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #080612;
-  --bg2: #0d0920;
-  --bg3: #120e2a;
-  --card: #160f2e;
-  --card2: #1d1540;
-  --card3: #241c50;
-  --border: #2a1f54;
-  --border2: #3d2d7a;
-  --purple: #7c3aed;
-  --purple2: #9b5cf6;
-  --purple3: #c084fc;
-  --gold: #f59e0b;
-  --gold2: #fbbf24;
-  --gold3: #fde68a;
-  --text: #f0ebff;
-  --text2: #a89ec0;
-  --text3: #5a4f78;
-  --green: #10b981;
-  --red: #ef4444;
-  --blue: #3b82f6;
-  --cyan: #06b6d4;
-  --neon: #a855f7;
-  --r: 14px;
-  --shadow: 0 8px 32px rgba(124,58,237,0.2);
-  --glow: 0 0 20px rgba(124,58,237,0.4);
-}
+:root{--bg:#080612;--bg2:#0d0920;--bg3:#120e2a;--card:#160f2e;--card2:#1d1540;--card3:#241c50;--border:#2a1f54;--border2:#3d2d7a;--purple:#7c3aed;--purple2:#9b5cf6;--purple3:#c084fc;--gold:#f59e0b;--gold2:#fbbf24;--gold3:#fde68a;--text:#f0ebff;--text2:#a89ec0;--text3:#5a4f78;--green:#10b981;--red:#ef4444;--blue:#3b82f6;--r:14px;--shadow:0 8px 32px rgba(124,58,237,0.2);--glow:0 0 20px rgba(124,58,237,0.4);}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(124,58,237,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(245,158,11,0.05) 0%,transparent 50%);pointer-events:none;z-index:0;}
-
-/* SCROLLBAR */
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:var(--bg2);}
-::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px;}
-
-/* STARS BG */
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px;}
 .stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;background:white;border-radius:50%;animation:twinkle var(--d,3s) ease-in-out infinite var(--delay,0s);}
 @keyframes twinkle{0%,100%{opacity:0.2;}50%{opacity:1;}}
 
 /* SECURITY BANNER */
-.sec-banner{background:linear-gradient(90deg,rgba(124,58,237,0.15),rgba(245,158,11,0.15));border-bottom:1px solid rgba(245,158,11,0.3);padding:7px 16px;text-align:center;font-size:11px;color:var(--gold2);display:flex;align-items:center;justify-content:center;gap:6px;position:relative;z-index:10;}
+.sec-banner{background:linear-gradient(90deg,rgba(124,58,237,0.15),rgba(245,158,11,0.15));border-bottom:1px solid rgba(245,158,11,0.3);padding:7px 16px;text-align:center;font-size:11px;color:var(--gold2);display:flex;align-items:center;justify-content:center;gap:6px;position:relative;z-index:10;flex-wrap:wrap;}
 
 /* NAVBAR */
-.nav{background:rgba(8,6,18,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 16px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer;}
-.nav-logo img{width:32px;height:32px;border-radius:8px;}
-.nav-logo-text{font-family:'Orbitron',sans-serif;font-weight:700;font-size:16px;background:linear-gradient(135deg,var(--purple3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.nav-right{display:flex;align-items:center;gap:8px;}
-.nav-user{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border2);padding:6px 10px;border-radius:20px;cursor:pointer;transition:all 0.2s;}
-.nav-user:hover{border-color:var(--purple);}
-.nav-user-avatar{width:24px;height:24px;background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;}
-.nav-user-name{font-size:12px;font-weight:600;color:var(--text);}
-.nav-user-kyc{width:14px;height:14px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;}
+.nav{background:rgba(8,6,18,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 12px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:8px;}
+.nav-logo{display:flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;}
+.nav-logo img{width:28px;height:28px;border-radius:7px;}
+.nav-logo-text{font-family:'Orbitron',sans-serif;font-weight:700;font-size:13px;background:linear-gradient(135deg,var(--purple3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;}
+.nav-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.nav-user{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border2);padding:5px 8px;border-radius:18px;cursor:pointer;max-width:110px;}
+.nav-user-avatar{width:20px;height:20px;background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+.nav-user-name{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nav-user-kyc{width:12px;height:12px;background:var(--green);border-radius:50%;flex-shrink:0;display:none;}
+.notif-btn{position:relative;background:var(--card);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.notif-dot{position:absolute;top:4px;right:4px;width:7px;height:7px;background:var(--gold);border-radius:50%;display:none;animation:pulse 1s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+.lang-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px 6px;border-radius:7px;font-size:10px;cursor:pointer;font-family:'Exo 2',sans-serif;outline:none;max-width:70px;}
+.lang-select option{background:var(--bg2);}
 
 /* PRICE TICKER */
-.price-ticker{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:4px 0;overflow:hidden;position:relative;z-index:10;}
-.ticker-inner{display:flex;gap:20px;padding:0 10px;white-space:nowrap;animation:ticker 20s linear infinite;}
+.price-ticker{background:var(--bg2);border-bottom:1px solid var(--border);padding:5px 0;overflow:hidden;position:relative;z-index:10;}
+.ticker-track{display:flex;gap:0;animation:ticker 25s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
 @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.ticker-item{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;}
-.ticker-label{color:var(--text3);}
-.ticker-val{color:var(--gold2);}
-
-/* NOTIF BTN */
-.notif-btn{position:relative;background:var(--card);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
-.notif-btn:hover{border-color:var(--purple);}
-.notif-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--gold);border-radius:50%;display:none;animation:pulse 1s ease-in-out infinite;}
-@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
-
-/* LANG SELECT */
-.lang-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:5px 8px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Exo 2',sans-serif;outline:none;}
-.lang-select option{background:var(--bg2);}
+.ticker-item{display:flex;align-items:center;gap:4px;padding:0 14px;white-space:nowrap;border-right:1px solid var(--border);}
+.ticker-flag{font-size:12px;}
+.ticker-label{font-size:10px;color:var(--text3);}
+.ticker-val{font-size:11px;font-weight:700;color:var(--gold2);}
 
 /* PAGES */
 .page{display:none;position:relative;z-index:1;}
 .page.active{display:block;}
 
-/* LOGIN PAGE */
-.login-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;position:relative;z-index:1;}
-.login-glow{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(124,58,237,0.2) 0%,transparent 70%);pointer-events:none;}
-.login-logo{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;}
-.login-logo img{width:80px;height:80px;border-radius:20px;margin-bottom:12px;filter:drop-shadow(0 0 20px rgba(124,58,237,0.5));}
-.login-logo-title{font-family:'Orbitron',sans-serif;font-weight:900;font-size:28px;background:linear-gradient(135deg,var(--purple3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.login-logo-sub{color:var(--text3);font-size:12px;letter-spacing:3px;margin-top:4px;}
-.login-card{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border2);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;text-align:center;position:relative;overflow:hidden;}
-.login-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,0.05),transparent);pointer-events:none;}
-.login-card h2{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px;}
-.login-card p{color:var(--text2);font-size:13px;margin-bottom:24px;line-height:1.6;}
-.pi-login-btn{width:100%;background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:16px;padding:16px;border-radius:12px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;}
-.pi-login-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);pointer-events:none;}
-.pi-login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,58,237,0.5);}
-.login-features{display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;}
-.login-feature{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
-.feature-check{color:var(--green);font-size:14px;}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;position:relative;z-index:1;}
+.login-glow{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(124,58,237,0.2) 0%,transparent 70%);pointer-events:none;}
+.login-logo-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:28px;}
+.login-logo-img{width:72px;height:72px;border-radius:18px;margin-bottom:10px;filter:drop-shadow(0 0 16px rgba(124,58,237,0.5));}
+.login-logo-title{font-family:'Orbitron',sans-serif;font-weight:900;font-size:24px;background:linear-gradient(135deg,var(--purple3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.login-logo-sub{color:var(--text3);font-size:11px;letter-spacing:3px;margin-top:3px;}
+.login-card{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border2);border-radius:18px;padding:24px 20px;width:100%;max-width:340px;text-align:center;}
+.login-card h2{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;}
+.login-card p{color:var(--text2);font-size:12px;margin-bottom:20px;line-height:1.6;}
+.pi-login-btn{width:100%;background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:15px;padding:14px;border-radius:11px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.pi-login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,0.5);}
+.pi-login-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.login-features{display:flex;flex-direction:column;gap:7px;margin-top:16px;text-align:left;}
+.login-feature{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text2);}
+.fcheck{color:var(--green);font-size:13px;}
 
 /* HERO */
-.hero{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);padding:20px 16px 16px;position:relative;overflow:hidden;}
-.hero-banner{background:linear-gradient(135deg,var(--card2),var(--card3));border:1px solid var(--border2);border-radius:16px;padding:20px;margin-bottom:16px;position:relative;overflow:hidden;}
-.hero-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(124,58,237,0.2) 0%,transparent 60%);pointer-events:none;}
-.hero-banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--gold),var(--purple));animation:shimmer 3s linear infinite;}
-@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}background-size:200% 100%;}
-.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(18px,5vw,26px);font-weight:900;background:linear-gradient(135deg,var(--text) 0%,var(--purple3) 50%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;line-height:1.2;}
-.hero-sub{color:var(--text2);font-size:12px;margin-bottom:14px;}
+.hero{padding:14px 14px 10px;position:relative;}
+.hero-banner{background:linear-gradient(135deg,var(--card2),var(--card3));border:1px solid var(--border2);border-radius:14px;padding:16px;position:relative;overflow:hidden;}
+.hero-banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--gold),var(--purple),transparent);}
+.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(15px,4.5vw,22px);font-weight:900;background:linear-gradient(135deg,var(--text) 0%,var(--purple3) 50%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;line-height:1.3;}
+.hero-sub{color:var(--text2);font-size:11px;margin-bottom:12px;}
 .hero-tags{display:flex;gap:6px;flex-wrap:wrap;}
-.hero-tag{background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);color:var(--purple3);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;}
+.hero-tag{background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);color:var(--purple3);padding:3px 9px;border-radius:20px;font-size:10px;font-weight:500;}
 
 /* SEARCH */
-.search-wrap{padding:0 16px 12px;position:relative;z-index:1;}
-.search-bar{display:flex;gap:8px;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:8px;transition:border-color 0.2s;}
+.search-wrap{padding:10px 14px 8px;}
+.search-bar{display:flex;gap:7px;background:var(--card);border:1px solid var(--border2);border-radius:11px;padding:7px;transition:border-color 0.2s;}
 .search-bar:focus-within{border-color:var(--purple);}
-.search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:14px;font-family:'Exo 2',sans-serif;outline:none;padding:4px 8px;}
+.search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:13px;font-family:'Exo 2',sans-serif;outline:none;padding:3px 6px;}
 .search-bar input::placeholder{color:var(--text3);}
-.search-bar button{background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;color:white;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;}
+.search-bar button{background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;color:white;padding:7px 14px;border-radius:7px;cursor:pointer;font-size:13px;}
 
 /* CATEGORIES */
-.categories{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;}
+.categories{display:flex;gap:7px;padding:0 14px 10px;overflow-x:auto;scrollbar-width:none;}
 .categories::-webkit-scrollbar{display:none;}
-.cat-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:7px 14px;border-radius:20px;cursor:pointer;font-size:12px;white-space:nowrap;transition:all 0.2s;font-family:'Exo 2',sans-serif;font-weight:500;}
+.cat-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:6px 13px;border-radius:18px;cursor:pointer;font-size:11px;white-space:nowrap;transition:all 0.2s;font-family:'Exo 2',sans-serif;font-weight:500;}
 .cat-btn:hover,.cat-btn.active{background:linear-gradient(135deg,var(--purple),var(--purple2));border-color:transparent;color:white;}
 
 /* PRODUCTS */
-.products-section{padding:0 16px 100px;}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.section-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;}
-.refresh-btn{background:none;border:none;color:var(--purple3);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;}
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;}
+.products-section{padding:0 14px 100px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.section-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;}
+.refresh-btn{background:none;border:none;color:var(--purple3);font-size:11px;cursor:pointer;}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;}
 .product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all 0.3s;animation:fadeUp 0.4s ease;}
 .product-card:hover{transform:translateY(-4px);border-color:var(--purple2);box-shadow:var(--shadow);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-.product-img{width:100%;aspect-ratio:1;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.product-img{width:100%;aspect-ratio:1;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden;}
 .product-img img{width:100%;height:100%;object-fit:cover;}
-.product-badge{position:absolute;top:8px;right:8px;background:var(--purple);color:white;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;}
+.product-badge{position:absolute;top:6px;right:6px;background:var(--purple);color:white;font-size:9px;padding:2px 5px;border-radius:4px;font-weight:700;}
 .product-badge.digital{background:var(--blue);}
-.product-info{padding:10px;}
-.product-title{font-size:12px;font-weight:600;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.product-seller{font-size:10px;color:var(--text3);margin-bottom:6px;}
-.product-price{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--gold2);}
+.product-info{padding:9px;}
+.product-title{font-size:12px;font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.product-seller{font-size:10px;color:var(--text3);margin-bottom:5px;}
+.product-price{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:var(--gold2);}
 
 /* SELL PAGE */
-.sell-page{padding:16px 16px 100px;}
-.page-title{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
-.form-group{margin-bottom:14px;}
-.form-label{display:block;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;letter-spacing:0.5px;}
-.form-input,.form-select,.form-textarea{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);padding:11px 14px;border-radius:10px;font-size:13px;font-family:'Exo 2',sans-serif;outline:none;transition:border-color 0.2s;}
+.sell-page{padding:14px 14px 100px;}
+.page-title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:7px;}
+.form-group{margin-bottom:13px;}
+.form-label{display:block;font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:600;letter-spacing:0.5px;}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 13px;border-radius:9px;font-size:13px;font-family:'Exo 2',sans-serif;outline:none;transition:border-color 0.2s;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--purple);}
 .form-select option{background:var(--bg2);}
-.form-textarea{resize:vertical;min-height:90px;}
-
-/* IMAGE UPLOAD */
-.upload-area{background:var(--card);border:2px dashed var(--border2);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
-.upload-area:hover{border-color:var(--purple);background:var(--card2);}
-.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;}
-.upload-icon{font-size:32px;margin-bottom:8px;}
-.upload-text{font-size:13px;color:var(--text2);}
-.upload-sub{font-size:11px;color:var(--text3);margin-top:4px;}
-.upload-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-.preview-item{width:60px;height:60px;border-radius:8px;overflow:hidden;position:relative;border:1px solid var(--border);}
+.form-textarea{resize:vertical;min-height:85px;}
+.upload-area{background:var(--card);border:2px dashed var(--border2);border-radius:11px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.upload-area:hover{border-color:var(--purple);}
+.upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-icon{font-size:28px;margin-bottom:6px;}
+.upload-text{font-size:12px;color:var(--text2);}
+.upload-sub{font-size:10px;color:var(--text3);margin-top:3px;}
+.upload-preview{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px;}
+.preview-item{width:56px;height:56px;border-radius:7px;overflow:hidden;position:relative;border:1px solid var(--border);}
 .preview-item img{width:100%;height:100%;object-fit:cover;}
-.preview-item .remove-btn{position:absolute;top:2px;right:2px;background:rgba(239,68,68,0.9);border:none;color:white;width:16px;height:16px;border-radius:50%;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;}
-.pdf-preview{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px;margin-top:8px;}
-.pdf-icon{font-size:24px;}
-.pdf-name{font-size:12px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-
-/* EMOJI PICKER */
-.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:6px;}
-.emoji-opt{font-size:22px;text-align:center;padding:6px;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;}
+.remove-btn{position:absolute;top:2px;right:2px;background:rgba(239,68,68,0.9);border:none;color:white;width:15px;height:15px;border-radius:50%;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;}
+.pdf-preview{background:var(--card2);border:1px solid var(--border);border-radius:7px;padding:8px;display:flex;align-items:center;gap:7px;margin-top:6px;}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:5px;}
+.emoji-opt{font-size:20px;text-align:center;padding:5px;border-radius:7px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;}
 .emoji-opt:hover,.emoji-opt.sel{border-color:var(--purple);background:var(--card2);}
-
-/* SUBMIT BTN */
-.submit-btn{width:100%;background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:15px;padding:15px;border-radius:12px;cursor:pointer;margin-top:8px;margin-bottom:90px;transition:all 0.3s;position:relative;overflow:hidden;}
-.submit-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);pointer-events:none;}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;color:white;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;padding:14px;border-radius:11px;cursor:pointer;margin-top:6px;margin-bottom:90px;transition:all 0.3s;}
 .submit-btn:hover{transform:translateY(-2px);box-shadow:var(--glow);}
 .submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
 
-/* ORDERS PAGE */
-.orders-page{padding:16px 16px 100px;}
-.tab-bar{display:flex;background:var(--card);border-radius:10px;padding:4px;margin-bottom:16px;border:1px solid var(--border);}
-.tab{flex:1;text-align:center;padding:9px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.2s;font-weight:500;}
+/* ORDERS */
+.orders-page{padding:14px 14px 100px;}
+.tab-bar{display:flex;background:var(--card);border-radius:9px;padding:3px;margin-bottom:14px;border:1px solid var(--border);}
+.tab{flex:1;text-align:center;padding:8px;border-radius:7px;cursor:pointer;font-size:12px;color:var(--text2);transition:all 0.2s;font-weight:500;}
 .tab.active{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;}
-.order-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;}
+.order-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:9px;cursor:pointer;transition:all 0.2s;}
 .order-card:hover{border-color:var(--purple2);}
-.order-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.order-title{font-weight:600;font-size:14px;}
-.order-meta{font-size:11px;color:var(--text3);margin-bottom:6px;}
-.order-amount{font-family:'Orbitron',sans-serif;font-weight:700;color:var(--gold2);font-size:15px;}
-.status-badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:700;border:1px solid;}
+.order-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;}
+.order-title{font-weight:600;font-size:13px;flex:1;padding-right:8px;}
+.order-meta{font-size:10px;color:var(--text3);margin-bottom:5px;}
+.order-amount{font-family:'Orbitron',sans-serif;font-weight:700;color:var(--gold2);font-size:14px;}
+.sbadge{font-size:10px;padding:2px 7px;border-radius:18px;font-weight:700;border:1px solid;white-space:nowrap;}
 .s-pending{background:rgba(107,114,128,0.2);color:#9ca3af;border-color:#374151;}
 .s-paid{background:rgba(59,130,246,0.2);color:#60a5fa;border-color:#1d4ed8;}
 .s-shipped{background:rgba(245,158,11,0.2);color:#fbbf24;border-color:#d97706;}
@@ -202,120 +154,124 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .s-disputed{background:rgba(239,68,68,0.2);color:#f87171;border-color:#7f1d1d;}
 .s-refunded{background:rgba(107,114,128,0.2);color:#9ca3af;border-color:#374151;}
 
-/* WALLET PAGE */
-.wallet-page{padding:16px 16px 100px;}
-.wallet-card{background:linear-gradient(135deg,var(--card2),var(--card3));border:1px solid var(--border2);border-radius:16px;padding:20px;margin-bottom:16px;position:relative;overflow:hidden;}
-.wallet-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 100% 0%,rgba(245,158,11,0.1) 0%,transparent 60%);pointer-events:none;}
-.wallet-label{font-size:11px;color:var(--text3);margin-bottom:4px;letter-spacing:1px;text-transform:uppercase;}
-.wallet-addr{font-family:monospace;font-size:12px;color:var(--text2);word-break:break-all;background:var(--card);padding:8px 12px;border-radius:8px;margin-top:8px;border:1px solid var(--border);}
-.wallet-balance{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:900;color:var(--gold2);margin:8px 0;}
-.copy-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:11px;transition:all 0.2s;}
+/* WALLET */
+.wallet-page{padding:14px 14px 100px;}
+.wallet-card{background:linear-gradient(135deg,var(--card2),var(--card3));border:1px solid var(--border2);border-radius:14px;padding:16px;margin-bottom:14px;}
+.wallet-label{font-size:10px;color:var(--text3);margin-bottom:3px;letter-spacing:1px;text-transform:uppercase;}
+.wallet-addr{font-family:monospace;font-size:11px;color:var(--text2);word-break:break-all;background:var(--card);padding:7px 10px;border-radius:7px;margin-top:6px;border:1px solid var(--border);}
+.wallet-balance{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;color:var(--gold2);margin:6px 0;}
+.copy-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:5px 10px;border-radius:7px;cursor:pointer;font-size:10px;transition:all 0.2s;margin-top:6px;}
 .copy-btn:hover{border-color:var(--purple);color:var(--purple3);}
-.escrow-info{background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.3);border-radius:12px;padding:14px;margin-bottom:16px;}
-.escrow-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:var(--purple3);margin-bottom:8px;}
-.escrow-text{font-size:12px;color:var(--text2);line-height:1.6;}
-.tx-list{display:flex;flex-direction:column;gap:8px;}
-.tx-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;}
-.tx-info{font-size:12px;}
+.escrow-info{background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.25);border-radius:11px;padding:12px;margin-bottom:14px;}
+.escrow-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--purple3);margin-bottom:6px;}
+.escrow-text{font-size:11px;color:var(--text2);line-height:1.6;}
+.tx-item{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.tx-info{font-size:11px;flex:1;}
 .tx-title{font-weight:600;margin-bottom:2px;}
-.tx-meta{color:var(--text3);font-size:11px;}
-.tx-amount{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;}
+.tx-meta{color:var(--text3);font-size:10px;}
+.tx-amount{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;white-space:nowrap;margin-left:8px;}
 .tx-in{color:var(--green);}
 .tx-out{color:var(--red);}
 
-/* PROFILE PAGE */
-.profile-page{padding:16px 16px 100px;}
-.profile-header{background:linear-gradient(135deg,var(--card2),var(--card3));border:1px solid var(--border2);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;}
-.profile-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,0.15) 0%,transparent 60%);pointer-events:none;}
-.profile-avatar{width:68px;height:68px;background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px;border:3px solid var(--border2);}
-.profile-name{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;}
-.profile-kyc{display:inline-flex;align-items:center;gap:4px;background:rgba(16,185,129,0.15);color:var(--green);border:1px solid var(--green);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:6px;}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
-.stat-num{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:800;color:var(--gold2);}
-.stat-label{font-size:11px;color:var(--text3);margin-top:3px;}
-.menu-list{display:flex;flex-direction:column;gap:8px;}
-.menu-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.2s;}
+/* PROFILE */
+.profile-page{padding:14px 14px 100px;}
+.profile-header{background:linear-gradient(135deg,var(--card2),var(--card3));border:1px solid var(--border2);border-radius:14px;padding:18px;text-align:center;margin-bottom:14px;}
+.profile-avatar{width:60px;height:60px;background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 8px;border:2px solid var(--border2);}
+.profile-name{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;}
+.profile-kyc{display:inline-flex;align-items:center;gap:3px;background:rgba(16,185,129,0.12);color:var(--green);border:1px solid var(--green);padding:2px 8px;border-radius:18px;font-size:10px;font-weight:700;margin-top:5px;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:800;color:var(--gold2);}
+.stat-label{font-size:10px;color:var(--text3);margin-top:2px;}
+.menu-list{display:flex;flex-direction:column;gap:7px;}
+.menu-item{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;}
 .menu-item:hover{border-color:var(--purple);background:var(--card2);}
-.menu-icon{font-size:18px;width:24px;text-align:center;}
-.menu-text{flex:1;font-size:14px;font-weight:500;}
-.menu-arrow{color:var(--text3);font-size:16px;}
+.menu-icon{font-size:16px;width:22px;text-align:center;}
+.menu-text{flex:1;font-size:13px;font-weight:500;}
+.menu-arrow{color:var(--text3);}
 
-/* ADMIN PAGE */
-.admin-page{padding:16px 16px 100px;}
-.admin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
-.admin-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;}
-.admin-card-label{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;}
-.admin-card-val{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:800;color:var(--gold2);}
+/* ADMIN */
+.admin-page{padding:14px 14px 100px;}
+.admin-login{background:var(--card);border:1px solid var(--border2);border-radius:13px;padding:18px;margin-bottom:18px;}
+.admin-login h3{font-family:'Orbitron',sans-serif;font-size:14px;margin-bottom:12px;}
+.admin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:18px;}
+.admin-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;}
+.admin-card-label{font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:1px;}
+.admin-card-val{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:800;color:var(--gold2);}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:200;display:none;align-items:flex-end;justify-content:center;}
 .modal-overlay.active{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:20px 16px 32px;animation:slideUp 0.3s ease;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:18px 18px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:18px 14px 28px;animation:slideUp 0.3s ease;}
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px;}
-.modal-close{float:right;background:var(--card);border:1px solid var(--border);color:var(--text);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;}
-.modal-title{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:700;margin-bottom:14px;}
-
-/* PRODUCT DETAIL */
-.detail-img{width:100%;aspect-ratio:16/9;background:var(--card);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:72px;margin-bottom:14px;overflow:hidden;}
+.modal-handle{width:34px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 14px;}
+.modal-close{float:right;background:var(--card);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:7px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.modal-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;margin-bottom:12px;}
+.detail-img{width:100%;aspect-ratio:16/9;background:var(--card);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:64px;margin-bottom:12px;overflow:hidden;}
 .detail-img img{width:100%;height:100%;object-fit:cover;}
-.detail-price{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:var(--gold2);margin-bottom:6px;}
-.detail-seller{color:var(--text2);font-size:13px;margin-bottom:10px;}
-.detail-desc{color:var(--text2);font-size:13px;line-height:1.6;margin-bottom:16px;}
-.buy-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:#1a0d00;font-family:'Orbitron',sans-serif;font-weight:700;font-size:15px;padding:15px;border-radius:12px;cursor:pointer;transition:all 0.3s;}
+.detail-price{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--gold2);margin-bottom:5px;}
+.detail-seller{color:var(--text2);font-size:12px;margin-bottom:9px;}
+.detail-desc{color:var(--text2);font-size:12px;line-height:1.6;margin-bottom:14px;}
+.buy-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:#1a0d00;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;padding:14px;border-radius:11px;cursor:pointer;transition:all 0.3s;}
 .buy-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,0.4);}
 .buy-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-
-/* ORDER DETAIL */
-.order-detail-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.order-detail-amount{font-family:'Orbitron',sans-serif;font-weight:700;color:var(--gold2);font-size:20px;}
-.order-actions{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
-.action-btn{width:100%;padding:12px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;border:none;font-family:'Exo 2',sans-serif;transition:all 0.2s;}
-.action-btn.ship{background:linear-gradient(135deg,var(--blue),#2563eb);color:white;}
-.action-btn.confirm{background:linear-gradient(135deg,var(--green),#059669);color:white;}
-.action-btn.dispute{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid var(--red)!important;}
-.action-btn:hover{transform:translateY(-1px);}
-
-/* ESCROW STATUS */
-.escrow-status{background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.3);border-radius:10px;padding:12px;margin-bottom:14px;}
-.escrow-steps{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
-.escrow-step{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;}
-.escrow-step-dot{width:20px;height:20px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;}
-.escrow-step-dot.done{background:var(--green);}
-.escrow-step-dot.active{background:var(--gold2);animation:pulse 1s ease-in-out infinite;}
-.escrow-step-label{font-size:9px;color:var(--text3);text-align:center;}
-.escrow-line{height:2px;flex:1;background:var(--border);margin:0 4px;margin-bottom:14px;}
-.escrow-line.done{background:var(--green);}
-
-/* CHAT */
-.chat-wrap{display:flex;flex-direction:column;height:55vh;}
-.chat-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:8px 0;}
-.chat-msg{max-width:78%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.4;}
-.chat-msg.mine{align-self:flex-end;background:var(--purple);color:white;border-radius:14px 14px 4px 14px;}
-.chat-msg.theirs{align-self:flex-start;background:var(--card2);color:var(--text);border-radius:14px 14px 14px 4px;}
-.chat-meta{font-size:9px;opacity:0.6;margin-top:3px;}
-.chat-input-row{display:flex;gap:8px;margin-top:10px;}
-.chat-input{flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:10px;font-size:13px;font-family:'Exo 2',sans-serif;outline:none;}
+.escrow-steps-wrap{background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.25);border-radius:9px;padding:10px;margin-bottom:12px;}
+.escrow-steps-title{font-size:11px;font-weight:600;color:var(--purple3);margin-bottom:8px;}
+.escrow-steps{display:flex;align-items:center;}
+.estep{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;}
+.estep-dot{width:18px;height:18px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;}
+.estep-dot.done{background:var(--green);}
+.estep-dot.cur{background:var(--gold2);animation:pulse 1s ease-in-out infinite;}
+.estep-label{font-size:8px;color:var(--text3);text-align:center;}
+.eline{height:2px;flex:1;background:var(--border);margin:0 2px;margin-bottom:12px;}
+.eline.done{background:var(--green);}
+.order-actions{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.abtn{width:100%;padding:11px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;border:none;font-family:'Exo 2',sans-serif;transition:all 0.2s;}
+.abtn:hover{transform:translateY(-1px);}
+.abtn-ship{background:linear-gradient(135deg,var(--blue),#2563eb);color:white;}
+.abtn-confirm{background:linear-gradient(135deg,var(--green),#059669);color:white;}
+.abtn-dispute{background:rgba(239,68,68,0.12);color:var(--red);border:1px solid var(--red)!important;}
+.chat-wrap{display:flex;flex-direction:column;height:50vh;}
+.chat-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding:6px 0;}
+.chat-msg{max-width:78%;padding:8px 12px;border-radius:13px;font-size:12px;line-height:1.4;}
+.chat-msg.mine{align-self:flex-end;background:var(--purple);color:white;border-radius:13px 13px 3px 13px;}
+.chat-msg.theirs{align-self:flex-start;background:var(--card2);color:var(--text);border-radius:13px 13px 13px 3px;}
+.chat-meta{font-size:9px;opacity:0.6;margin-top:2px;}
+.chat-input-row{display:flex;gap:7px;margin-top:9px;}
+.chat-input{flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:9px;font-size:12px;font-family:'Exo 2',sans-serif;outline:none;}
 .chat-input:focus{border-color:var(--purple);}
-.chat-send{background:var(--purple);border:none;color:white;width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:16px;}
+.chat-send{background:var(--purple);border:none;color:white;width:38px;height:38px;border-radius:9px;cursor:pointer;font-size:15px;}
+
+/* FOOTER */
+.app-footer{background:var(--bg2);border-top:1px solid var(--border);padding:16px 14px 8px;text-align:center;margin-bottom:0;}
+.footer-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;background:linear-gradient(135deg,var(--purple3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.footer-sub{font-size:10px;color:var(--text3);margin-bottom:10px;}
+.footer-social{display:flex;justify-content:center;gap:10px;margin-bottom:10px;}
+.fsoc{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:9px;background:var(--card);border:1px solid var(--border);font-size:16px;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+.fsoc:hover{border-color:var(--purple);transform:translateY(-2px);}
+.footer-links{display:flex;justify-content:center;gap:14px;margin-bottom:8px;}
+.footer-link{font-size:10px;color:var(--text3);text-decoration:none;cursor:pointer;}
+.footer-link:hover{color:var(--purple3);}
+.footer-copy{font-size:9px;color:var(--text3);}
 
 /* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,6,18,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding:6px 0 max(6px,env(safe-area-inset-bottom));z-index:100;}
-.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px;cursor:pointer;transition:all 0.2s;color:var(--text3);font-size:10px;font-weight:500;}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(8,6,18,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding:5px 0 max(5px,env(safe-area-inset-bottom));z-index:100;}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;cursor:pointer;transition:all 0.2s;color:var(--text3);font-size:9px;font-weight:500;}
 .bnav-item.active{color:var(--purple2);}
-.bnav-icon{font-size:20px;transition:transform 0.2s;}
+.bnav-icon{font-size:19px;transition:transform 0.2s;}
 .bnav-item.active .bnav-icon{transform:scale(1.15);}
 
 /* NOTIF PANEL */
-.notif-panel{position:fixed;top:60px;right:12px;width:280px;background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:14px;z-index:150;display:none;box-shadow:var(--shadow);animation:fadeIn 0.2s ease;}
-.notif-panel.active{display:block;}
-.notif-panel-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:13px;margin-bottom:10px;}
-.notif-item{padding:9px 10px;border-radius:8px;background:var(--card);margin-bottom:6px;font-size:12px;color:var(--text2);border-left:3px solid var(--purple);}
-.notif-empty{text-align:center;color:var(--text3);font-size:12px;padding:16px;}
+.notif-panel{position:fixed;top:52px;right:10px;width:270px;background:var(--bg2);border:1px solid var(--border2);border-radius:13px;padding:12px;z-index:150;display:none;box-shadow:var(--shadow);}
+.notif-panel.active{display:block;animation:fadeIn 0.2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.notif-panel-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;margin-bottom:9px;}
+.notif-item{padding:8px 9px;border-radius:7px;background:var(--card);margin-bottom:5px;font-size:11px;color:var(--text2);border-left:3px solid var(--purple);}
+.notif-time{font-size:9px;color:var(--text3);margin-top:2px;}
+.notif-empty{text-align:center;color:var(--text3);font-size:11px;padding:14px;}
 
 /* TOAST */
-.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:11px 18px;border-radius:10px;font-size:13px;z-index:999;transition:transform 0.3s ease;white-space:nowrap;box-shadow:var(--shadow);}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:10px 16px;border-radius:9px;font-size:12px;z-index:999;transition:transform 0.3s ease;white-space:nowrap;box-shadow:var(--shadow);}
 .toast.show{transform:translateX(-50%) translateY(0);}
 .toast.success{border-color:var(--green);color:var(--green);}
 .toast.error{border-color:var(--red);color:var(--red);}
@@ -323,34 +279,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* CONFIRM */
 .confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;}
 .confirm-overlay.active{display:flex;}
-.confirm-box{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:24px;width:100%;max-width:320px;text-align:center;}
-.confirm-box h3{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;}
-.confirm-box p{color:var(--text2);font-size:13px;margin-bottom:18px;line-height:1.5;}
-.confirm-btns{display:flex;gap:10px;}
-.confirm-btns button{flex:1;padding:11px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;border:none;font-family:'Exo 2',sans-serif;}
-.confirm-cancel{background:var(--card);color:var(--text);border:1px solid var(--border)!important;}
-.confirm-ok{background:var(--red);color:white;}
-.confirm-ok.ok-purple{background:var(--purple);}
+.confirm-box{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:22px;width:100%;max-width:300px;text-align:center;}
+.confirm-box h3{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;margin-bottom:7px;}
+.confirm-box p{color:var(--text2);font-size:12px;margin-bottom:16px;line-height:1.5;}
+.confirm-btns{display:flex;gap:9px;}
+.confirm-btns button{flex:1;padding:10px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;border:none;font-family:'Exo 2',sans-serif;}
+.ccancel{background:var(--card);color:var(--text);border:1px solid var(--border)!important;}
+.cok{background:var(--red);color:white;}
+.cok.cpurple{background:var(--purple);}
 
-/* ADMIN LOGIN */
-.admin-login{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:20px;margin-bottom:20px;}
-.admin-login h3{font-family:'Orbitron',sans-serif;font-size:15px;margin-bottom:14px;}
-
-/* LOADING / EMPTY */
-.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--text3);flex-direction:column;gap:10px;}
-.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin 0.8s linear infinite;}
+/* HELPERS */
+.loading{display:flex;align-items:center;justify-content:center;padding:36px;color:var(--text3);flex-direction:column;gap:9px;}
+.spinner{width:26px;height:26px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.empty-state{text-align:center;padding:40px 20px;color:var(--text3);}
-.empty-emoji{font-size:44px;margin-bottom:10px;}
-.empty-text{font-size:14px;}
-
-/* RESPONSIVE */
-@media(max-width:360px){.products-grid{grid-template-columns:repeat(2,1fr);}}
+.empty-state{text-align:center;padding:36px 18px;color:var(--text3);}
+.empty-emoji{font-size:40px;margin-bottom:9px;}
+.empty-text{font-size:13px;}
 </style>
 </head>
 <body>
-
-<!-- STARS -->
 <div class="stars" id="stars"></div>
 
 <!-- SECURITY BANNER -->
@@ -359,24 +306,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- LOGIN PAGE -->
 <div id="loginPage">
   <div class="login-glow"></div>
-  <div class="login-page">
-    <div class="login-logo">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTA1MzMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMGQwYTE4Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJwaUdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojYzA4NGZjIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOWI1Y2Y2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2Y1OWUwYiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2FydEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojN2MzYWVkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzliNWNmNiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9InVybCgjYmdHcmFkKSIvPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNTAiIHJ4PSIyMDAiIHJ5PSIxNTAiIGZpbGw9InJnYmEoMTI0LDU4LDIzNywwLjE1KSIvPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTAwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMTU1LDkyLDI0NiwwLjMpIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8cGF0aCBkPSJNIDEyMCAxNDAgTCAxNDggMTQwIEwgMTc4IDI4MCBMIDM3MCAyODAgTCAzOTUgMTc1IEwgMTcwIDE3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI2NhcnRHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMjE1IiBjeT0iMzE1IiByPSIyMiIgZmlsbD0idXJsKCNjYXJ0R3JhZCkiLz4KICA8Y2lyY2xlIGN4PSIyMTUiIGN5PSIzMTUiIHI9IjEwIiBmaWxsPSIjMWEwNTMzIi8+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzE1IiByPSIyMiIgZmlsbD0idXJsKCNjYXJ0R3JhZCkiLz4KICA8Y2lyY2xlIGN4PSIzNDAiIGN5PSIzMTUiIHI9IjEwIiBmaWxsPSIjMWEwNTMzIi8+CiAgPGxpbmUgeDE9IjIzNSIgeTE9IjE5OCIgeDI9IjMxNSIgeTI9IjE5OCIgc3Ryb2tlPSJ1cmwoI3BpR3JhZCkiIHN0cm9rZS13aWR0aD0iMTQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxsaW5lIHgxPSIyNDgiIHkxPSIxOTgiIHgyPSIyNDQiIHkyPSIyNjAiIHN0cm9rZT0idXJsKCNwaUdyYWQpIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iMzAyIiB5MT0iMTk4IiB4Mj0iMzAyIiB5Mj0iMjYwIiBzdHJva2U9InVybCgjcGlHcmFkKSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHRleHQgeD0iMjU2IiB5PSIzOTUiIGZvbnQtZmFtaWx5PSInQXJpYWwgQmxhY2snIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ1cmwoI3BpR3JhZCkiPkJ1eUJ5UGk8L3RleHQ+CiAgPHRleHQgeD0iMjU2IiB5PSI0MzAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0icmdiYSgxNjcsMTM5LDIwMiwwLjgpIj5QSSBNQVJLRVRQTEFDRSA8L3RleHQ+Cjwvc3ZnPg==" alt="BuyZone Pi">
+  <div class="login-wrap">
+    <div class="login-logo-wrap">
+      <img class="login-logo-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMCIgZmlsbD0iIzFhMDUzMyIvPjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNTAiIHJ4PSIyMDAiIHJ5PSIxNTAiIGZpbGw9InJnYmEoMTI0LDU4LDIzNywwLjE1KSIvPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTAwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMTU1LDkyLDI0NiwwLjMpIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNIDEyMCAxNDAgTCAxNDggMTQwIEwgMTc4IDI4MCBMIDM3MCAyODAgTCAzOTUgMTc1IEwgMTcwIDE3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOWI1Y2Y2IiBzdHJva2Utd2lkdGg9IjIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48Y2lyY2xlIGN4PSIyMTUiIGN5PSIzMTUiIHI9IjIyIiBmaWxsPSIjOWI1Y2Y2Ii8+PGNpcmNsZSBjeD0iMjE1IiBjeT0iMzE1IiByPSIxMCIgZmlsbD0iIzFhMDUzMyIvPjxjaXJjbGUgY3g9IjM0MCIgY3k9IjMxNSIgcj0iMjIiIGZpbGw9IiM5YjVjZjYiLz48Y2lyY2xlIGN4PSIzNDAiIGN5PSIzMTUiIHI9IjEwIiBmaWxsPSIjMWEwNTMzIi8+PGxpbmUgeDE9IjIzNSIgeTE9IjE5OCIgeDI9IjMxNSIgeTI9IjE5OCIgc3Ryb2tlPSIjZjU5ZTBiIiBzdHJva2Utd2lkdGg9IjE0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMjQ4IiB5MT0iMTk4IiB4Mj0iMjQ0IiB5Mj0iMjYwIiBzdHJva2U9IiNmNTllMGIiIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIzMDIiIHkxPSIxOTgiIHgyPSIzMDIiIHkyPSIyNjAiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHRleHQgeD0iMjU2IiB5PSIzOTUiIGZvbnQtZmFtaWx5PSInQXJpYWwgQmxhY2snIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjU4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjYzA4NGZjIj5CdXlCeVBpPC90ZXh0Pjwvc3ZnPg==" alt="BuyZone Pi">
       <div class="login-logo-title">BuyZone Pi</div>
       <div class="login-logo-sub">PI NETWORK MARKETPLACE</div>
     </div>
     <div class="login-card">
       <h2>Welcome, Pioneer! 🚀</h2>
       <p>Sign in with your Pi account to start buying and selling with real Pi cryptocurrency.</p>
-      <button class="pi-login-btn" onclick="loginWithPi()">
-        <span style="font-size:20px;">π</span> Login with Pi
-      </button>
+      <button class="pi-login-btn" id="loginBtn" onclick="loginWithPi()"><span style="font-size:18px;">π</span> Login with Pi</button>
       <div class="login-features">
-        <div class="login-feature"><span class="feature-check">✓</span> Escrow-protected payments</div>
-        <div class="login-feature"><span class="feature-check">✓</span> KYC verified on mainnet</div>
-        <div class="login-feature"><span class="feature-check">✓</span> Buyer-seller chat per order</div>
-        <div class="login-feature"><span class="feature-check">✓</span> Auto dispute resolution</div>
-        <div class="login-feature"><span class="feature-check">✓</span> Only 2% commission</div>
+        <div class="login-feature"><span class="fcheck">✓</span> Escrow-protected payments</div>
+        <div class="login-feature"><span class="fcheck">✓</span> KYC verified on mainnet</div>
+        <div class="login-feature"><span class="fcheck">✓</span> Buyer-seller chat per order</div>
+        <div class="login-feature"><span class="fcheck">✓</span> Auto dispute resolution</div>
+        <div class="login-feature"><span class="fcheck">✓</span> Only 2% commission</div>
       </div>
     </div>
   </div>
@@ -393,64 +338,49 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
   <div class="nav-right">
     <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
-      <option value="en">🌐 EN</option>
-      <option value="ta">தமிழ்</option>
-      <option value="hi">हिंदी</option>
-      <option value="zh">中文</option>
-      <option value="es">Español</option>
-      <option value="ar">عربي</option>
-      <option value="fr">Français</option>
-      <option value="de">Deutsch</option>
-      <option value="pt">Português</option>
-      <option value="ru">Русский</option>
-      <option value="ja">日本語</option>
-      <option value="ko">한국어</option>
-      <option value="id">Bahasa</option>
-      <option value="tr">Türkçe</option>
-      <option value="vi">Tiếng Việt</option>
-      <option value="th">ไทย</option>
-      <option value="ms">Melayu</option>
-      <option value="tl">Filipino</option>
-      <option value="bn">বাংলা</option>
-      <option value="ur">اردو</option>
-      <option value="sw">Swahili</option>
-      <option value="pl">Polski</option>
-      <option value="nl">Nederlands</option>
-      <option value="it">Italiano</option>
-      <option value="uk">Українська</option>
+      <option value="en">🌐 EN</option><option value="ta">தமிழ்</option><option value="hi">हिंदी</option>
+      <option value="zh">中文</option><option value="es">ES</option><option value="ar">عربي</option>
+      <option value="fr">FR</option><option value="de">DE</option><option value="pt">PT</option>
+      <option value="ru">RU</option><option value="ja">日本語</option><option value="ko">한국어</option>
+      <option value="id">ID</option><option value="tr">TR</option><option value="vi">VI</option>
+      <option value="th">ไทย</option><option value="ms">MS</option><option value="tl">TL</option>
+      <option value="bn">বাংলা</option><option value="ur">اردو</option><option value="sw">SW</option>
+      <option value="pl">PL</option><option value="nl">NL</option><option value="it">IT</option>
+      <option value="uk">UK</option>
     </select>
-    <button class="notif-btn" onclick="toggleNotif()" id="notifBtn">
-      🔔
-      <div class="notif-dot" id="notifDot"></div>
-    </button>
+    <button class="notif-btn" onclick="toggleNotif()" id="notifBtn">🔔<div class="notif-dot" id="notifDot"></div></button>
     <div class="nav-user" id="navUser" onclick="showPage('profile')">
       <div class="nav-user-avatar" id="navAvatar">👤</div>
       <span class="nav-user-name" id="navName">@user</span>
-      <div class="nav-user-kyc" id="navKYC" style="display:none;">✓</div>
+      <div class="nav-user-kyc" id="navKYC"></div>
     </div>
   </div>
 </nav>
 
 <!-- PRICE TICKER -->
-<div class="price-ticker" style="margin:0;border-radius:0;border-left:none;border-right:none;">
-  <div class="ticker-inner" id="tickerInner">
-    <span class="ticker-item"><span class="ticker-label">π USD</span><span class="ticker-val" id="t-usd">$0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π INR</span><span class="ticker-val" id="t-inr">₹0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π EUR</span><span class="ticker-val" id="t-eur">€0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π GBP</span><span class="ticker-val" id="t-gbp">£0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π AED</span><span class="ticker-val" id="t-aed">0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π JPY</span><span class="ticker-val" id="t-jpy">¥0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π KRW</span><span class="ticker-val" id="t-krw">₩0.00</span></span>
-    <!-- duplicate for seamless loop -->
-    <span class="ticker-item"><span class="ticker-label">π USD</span><span class="ticker-val">$0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π INR</span><span class="ticker-val">₹0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π EUR</span><span class="ticker-val">€0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π GBP</span><span class="ticker-val">£0.00</span></span>
-    <span class="ticker-item"><span class="ticker-label">π AED</span><span class="ticker-val">0.00</span></span>
+<div class="price-ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item"><span class="ticker-flag">🇺🇸</span><span class="ticker-label">USD</span><span class="ticker-val" id="t-usd">$0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇮🇳</span><span class="ticker-label">INR</span><span class="ticker-val" id="t-inr">₹0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇪🇺</span><span class="ticker-label">EUR</span><span class="ticker-val" id="t-eur">€0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇬🇧</span><span class="ticker-label">GBP</span><span class="ticker-val" id="t-gbp">£0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇦🇪</span><span class="ticker-label">AED</span><span class="ticker-val" id="t-aed">0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇯🇵</span><span class="ticker-label">JPY</span><span class="ticker-val" id="t-jpy">¥0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇰🇷</span><span class="ticker-label">KRW</span><span class="ticker-val" id="t-krw">₩0</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇸🇬</span><span class="ticker-label">SGD</span><span class="ticker-val" id="t-sgd">S$0.00</span></span>
+    <!-- duplicate for loop -->
+    <span class="ticker-item"><span class="ticker-flag">🇺🇸</span><span class="ticker-label">USD</span><span class="ticker-val">$0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇮🇳</span><span class="ticker-label">INR</span><span class="ticker-val">₹0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇪🇺</span><span class="ticker-label">EUR</span><span class="ticker-val">€0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇬🇧</span><span class="ticker-label">GBP</span><span class="ticker-val">£0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇦🇪</span><span class="ticker-label">AED</span><span class="ticker-val">0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇯🇵</span><span class="ticker-label">JPY</span><span class="ticker-val">¥0.00</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇰🇷</span><span class="ticker-label">KRW</span><span class="ticker-val">₩0</span></span>
+    <span class="ticker-item"><span class="ticker-flag">🇸🇬</span><span class="ticker-label">SGD</span><span class="ticker-val">S$0.00</span></span>
   </div>
 </div>
 
-<!-- NOTIFICATIONS PANEL -->
+<!-- NOTIF PANEL -->
 <div class="notif-panel" id="notifPanel">
   <div class="notif-panel-title">🔔 <span data-t="notifications">Notifications</span></div>
   <div id="notifList"><div class="notif-empty">No notifications yet</div></div>
@@ -464,7 +394,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="hero-sub" id="heroSub">Buy &amp; sell with Pi. Every order is escrow protected.</div>
       <div class="hero-tags">
         <span class="hero-tag">🔒 <span data-t="escrowProtected">Escrow Protected</span></span>
-        <span class="hero-tag">✅ <span data-t="piVerified">Pi Verified Sellers</span></span>
+        <span class="hero-tag">✅ <span data-t="piVerified">Pi Verified</span></span>
         <span class="hero-tag">⚡ <span data-t="digitalGoods">Digital Goods</span></span>
       </div>
     </div>
@@ -485,6 +415,23 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="loading" style="grid-column:1/-1;"><div class="spinner"></div><span>Loading...</span></div>
     </div>
   </div>
+  <!-- FOOTER inside browse page -->
+  <div class="app-footer">
+    <div class="footer-title">BuyZone Pi</div>
+    <div class="footer-sub">Pi Network Marketplace · v1.0</div>
+    <div class="footer-social">
+      <a class="fsoc" href="https://x.com/BuyZonePi" target="_blank" title="Twitter/X">𝕏</a>
+      <a class="fsoc" href="https://facebook.com/profile.php?id=61576492460390" target="_blank" title="Facebook">📘</a>
+      <a class="fsoc" href="https://instagram.com/buybypiinpizone" target="_blank" title="Instagram">📸</a>
+      <a class="fsoc" href="https://threads.com/@buybypiinpizone" target="_blank" title="Threads">🧵</a>
+      <a class="fsoc" href="mailto:buybypiinpizone@gmail.com" title="Email">✉️</a>
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="https://chipper-figolla-d62d64.netlify.app/privacy-policy.html" target="_blank">Privacy Policy</a>
+      <a class="footer-link" href="https://chipper-figolla-d62d64.netlify.app/terms.html" target="_blank">Terms of Service</a>
+    </div>
+    <div class="footer-copy">© 2026 BuyZone Pi · Built on Pi Network</div>
+  </div>
 </div>
 
 <!-- SELL PAGE -->
@@ -501,7 +448,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <input type="file" id="fileInput" accept="image/*,.pdf" multiple onchange="handleFiles(this)">
         <div class="upload-icon">📸</div>
         <div class="upload-text" data-t="uploadText">Tap to upload images or PDF</div>
-        <div class="upload-sub">PNG, JPG, JPEG, PDF • Max 5MB each</div>
+        <div class="upload-sub">PNG, JPG, JPEG, PDF · Max 5MB each</div>
       </div>
       <div class="upload-preview" id="uploadPreview"></div>
     </div>
@@ -542,7 +489,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <label class="form-label">Price (Pi) *</label>
       <input class="form-input" id="prodPrice" type="number" step="0.01" min="0.01" placeholder="e.g. 10.5">
     </div>
-    <button class="submit-btn" onclick="listProduct()" id="listBtn">🚀 List Product</button>
+    <button class="submit-btn" onclick="listProduct()" id="listBtn">🚀 <span data-t="listProduct">List Product</span></button>
   </div>
 </div>
 
@@ -563,21 +510,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="wallet-page">
     <div class="page-title">💰 <span data-t="wallet">Wallet</span></div>
     <div class="escrow-info">
-      <div class="escrow-title">🔒 How Escrow Works</div>
-      <div class="escrow-text">When you buy, Pi is locked in escrow. Once you confirm delivery, Pi is released to the seller minus 2% commission. If no confirmation in 7 days, Pi auto-releases.</div>
+      <div class="escrow-title">🔒 <span data-t="howEscrowWorks">How Escrow Works</span></div>
+      <div class="escrow-text" data-t="escrowDesc">When you buy, Pi is locked in escrow. Once you confirm delivery, Pi is released to the seller minus 2% commission. If no confirmation in 7 days, Pi auto-releases to seller.</div>
     </div>
     <div class="wallet-card">
-      <div class="wallet-label">YOUR WALLET ADDRESS</div>
+      <div class="wallet-label" data-t="yourWallet">YOUR WALLET ADDRESS</div>
       <div id="walletAddr" class="wallet-addr">Connect your Pi wallet to view</div>
-      <button class="copy-btn" onclick="copyWallet()" style="margin-top:8px;">📋 Copy Address</button>
+      <button class="copy-btn" onclick="copyWallet()">📋 <span data-t="copyAddress">Copy Address</span></button>
     </div>
     <div class="wallet-card">
-      <div class="wallet-label">ESCROW BALANCE (In Escrow)</div>
+      <div class="wallet-label" data-t="escrowBalance">ESCROW BALANCE</div>
       <div class="wallet-balance" id="escrowBal">π 0.00</div>
-      <div style="font-size:11px;color:var(--text3);">Pi held pending delivery confirmation</div>
+      <div style="font-size:10px;color:var(--text3);" data-t="piHeld">Pi held pending delivery confirmation</div>
     </div>
-    <div class="section-title" style="margin-bottom:12px;" data-t="recentTransactions">Recent Transactions</div>
-    <div class="tx-list" id="txList"><div class="loading"><div class="spinner"></div></div></div>
+    <div class="section-title" style="margin-bottom:10px;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;" data-t="recentTransactions">Recent Transactions</div>
+    <div id="txList"><div class="loading"><div class="spinner"></div></div></div>
   </div>
 </div>
 
@@ -585,7 +532,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div id="profilePage" class="page">
   <div class="profile-page">
     <div class="profile-header">
-      <div class="profile-avatar" id="profileAvatar">👤</div>
+      <div class="profile-avatar">👤</div>
       <div class="profile-name" id="profileName">@pioneer</div>
       <div id="profileKYC" class="profile-kyc" style="display:none;">✓ KYC Verified</div>
     </div>
@@ -598,7 +545,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="menu-item" onclick="showPage('orders')"><span class="menu-icon">📋</span><span class="menu-text" data-t="myOrders">My Orders</span><span class="menu-arrow">›</span></div>
       <div class="menu-item" onclick="showPage('sell')"><span class="menu-icon">📦</span><span class="menu-text" data-t="listProduct">List a Product</span><span class="menu-arrow">›</span></div>
       <div class="menu-item" onclick="showPage('wallet')"><span class="menu-icon">💰</span><span class="menu-text" data-t="wallet">Wallet</span><span class="menu-arrow">›</span></div>
-      <div class="menu-item" id="adminMenuItem" style="display:none;" onclick="showAdminLogin()"><span class="menu-icon">⚙️</span><span class="menu-text">Admin Dashboard</span><span class="menu-arrow">›</span></div>
+      <div class="menu-item" id="adminMenuItem" style="display:none;" onclick="showPage('admin')"><span class="menu-icon">⚙️</span><span class="menu-text">Admin Dashboard</span><span class="menu-arrow">›</span></div>
       <div class="menu-item" onclick="confirmLogout()"><span class="menu-icon">🚪</span><span class="menu-text" data-t="logout">Logout</span><span class="menu-arrow">›</span></div>
     </div>
   </div>
@@ -610,23 +557,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="page-title">⚙️ Admin Dashboard</div>
     <div id="adminLoginSection" class="admin-login">
       <h3>🔐 Admin Login</h3>
-      <div class="form-group">
-        <input class="form-input" type="password" id="adminPwInput" placeholder="Enter admin password">
-      </div>
+      <div class="form-group"><input class="form-input" type="password" id="adminPwInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')verifyAdminPw()"></div>
       <button class="submit-btn" style="margin-bottom:0;" onclick="verifyAdminPw()">Login</button>
     </div>
     <div id="adminContent" style="display:none;">
       <div class="admin-grid" id="adminStats"></div>
-      <div class="section-title" style="margin:16px 0 10px;">📋 Recent Orders</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin:14px 0 9px;">📋 Recent Orders</div>
       <div id="adminOrders"></div>
-      <div class="section-title" style="margin:16px 0 10px;">⚠️ Open Disputes</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin:14px 0 9px;">⚠️ Open Disputes</div>
       <div id="adminDisputes"></div>
     </div>
   </div>
 </div>
 
 <!-- BOTTOM NAV -->
-<nav class="bottom-nav" id="bottomNav">
+<nav class="bottom-nav">
   <div class="bnav-item active" id="bnav-browse" onclick="showPage('browse')"><div class="bnav-icon">🏠</div><span data-t="home">Home</span></div>
   <div class="bnav-item" id="bnav-sell" onclick="showPage('sell')"><div class="bnav-icon">➕</div><span data-t="sell">Sell</span></div>
   <div class="bnav-item" id="bnav-orders" onclick="showPage('orders')"><div class="bnav-icon">📋</div><span data-t="orders">Orders</span></div>
@@ -634,129 +579,82 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="bnav-item" id="bnav-admin" onclick="showPage('admin')" style="display:none;"><div class="bnav-icon">⚙️</div><span>Admin</span></div>
   <div class="bnav-item" id="bnav-profile" onclick="showPage('profile')"><div class="bnav-icon">👤</div><span data-t="profile">Profile</span></div>
 </nav>
+</div>
 
-</div><!-- end mainApp -->
-
-<!-- PRODUCT DETAIL MODAL -->
+<!-- MODALS -->
 <div class="modal-overlay" id="productModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <button class="modal-close" onclick="closeModal('productModal')">✕</button>
-    <div id="productModalContent"></div>
-  </div>
+  <div class="modal"><div class="modal-handle"></div><button class="modal-close" onclick="closeModal('productModal')">✕</button><div id="productModalContent"></div></div>
 </div>
-
-<!-- ORDER DETAIL MODAL -->
 <div class="modal-overlay" id="orderModal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <button class="modal-close" onclick="closeModal('orderModal')">✕</button>
-    <div id="orderModalContent"></div>
-  </div>
+  <div class="modal"><div class="modal-handle"></div><button class="modal-close" onclick="closeModal('orderModal')">✕</button><div id="orderModalContent"></div></div>
 </div>
-
-<!-- CONFIRM DIALOG -->
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-box">
     <h3 id="confirmTitle">Are you sure?</h3>
     <p id="confirmMsg">This action cannot be undone.</p>
     <div class="confirm-btns">
-      <button class="confirm-cancel" onclick="closeConfirm()">Cancel</button>
-      <button class="confirm-ok" id="confirmOkBtn">Confirm</button>
+      <button class="ccancel" onclick="closeConfirm()">Cancel</button>
+      <button class="cok" id="confirmOkBtn">Confirm</button>
     </div>
   </div>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
-const BACKEND = 'https://buyzonepii-backend-2.onrender.com';
-const ADMIN_USERNAME = 'kanthn005';
-const ADMIN_PASSWORD = 'BuyZonePi@2026';
-const VERSION = 'v1.0';
-const AUTO_RELEASE_DAYS = 7;
-
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let currentUser = null;
-let allProducts = [];
-let currentCategory = 'all';
-let orderTab = 'buying';
-let selectedEmoji = '📦';
-let uploadedFiles = [];
-let notifications = [];
-let currentLang = 'en';
-let adminVerified = false;
+const BACKEND='https://buyzonepii-backend-2.onrender.com';
+const ADMIN_USERNAME='kanthn005';
+const ADMIN_PASSWORD='BuyZonePi@2026';
+let currentUser=null,allProducts=[],currentCategory='all',orderTab='buying',selectedEmoji='📦',uploadedFiles=[],notifications=[],currentLang='en',adminVerified=false;
 
 // ─── TRANSLATIONS ─────────────────────────────────────────────────────────────
-const T = {
-  en:{home:'Home',sell:'Sell',orders:'Orders',wallet:'Wallet',profile:'Profile',myOrders:'My Orders',listProduct:'List a Product',logout:'Logout',purchases:'Purchases',sales:'Sales',earned:'Earned',notifications:'Notifications',heroTitle:'Welcome to the future of Commerce.',heroSub:'Buy & sell with Pi. Every order is escrow protected.',sectionTitle:'🔥 Latest Arrivals',escrowProtected:'Escrow Protected',piVerified:'Pi Verified Sellers',digitalGoods:'Digital Goods',buying:'Buying',selling:'Selling',recentTransactions:'Recent Transactions',uploadText:'Tap to upload images or PDF',productIcon:'Product Icon',productImages:'Product Images / PDF'},
-  ta:{home:'முகப்பு',sell:'விற்க',orders:'ஆர்டர்கள்',wallet:'பணப்பை',profile:'சுயவிவரம்',myOrders:'என் ஆர்டர்கள்',listProduct:'பொருள் பதிவிடு',logout:'வெளியேறு',purchases:'கொள்முதல்கள்',sales:'விற்பனைகள்',earned:'சம்பாதித்தது',notifications:'அறிவிப்புகள்',heroTitle:'வர்த்தகத்தின் எதிர்காலத்திற்கு வரவேற்கிறோம்.',heroSub:'பையில் வாங்கவும் விற்கவும். எல்லா ஆர்டரும் எஸ்க்ரோ பாதுகாப்பில்.',sectionTitle:'🔥 சமீபத்திய வருகைகள்',escrowProtected:'எஸ்க்ரோ பாதுகாப்பு',piVerified:'பை சரிபார்க்கப்பட்ட விற்பனையாளர்கள்',digitalGoods:'டிஜிட்டல் பொருட்கள்',buying:'வாங்குதல்',selling:'விற்பனை',recentTransactions:'சமீபத்திய பரிவர்த்தனைகள்',uploadText:'படங்கள் அல்லது PDF பதிவேற்றவும்',productIcon:'பொருள் ஐகான்',productImages:'பொருள் படங்கள் / PDF'},
-  hi:{home:'होम',sell:'बेचें',orders:'ऑर्डर',wallet:'वॉलेट',profile:'प्रोफाइल',myOrders:'मेरे ऑर्डर',listProduct:'उत्पाद सूचीबद्ध करें',logout:'लॉगआउट',purchases:'खरीदारी',sales:'बिक्री',earned:'कमाई',notifications:'सूचनाएं',heroTitle:'वाणिज्य के भविष्य में आपका स्वागत है।',heroSub:'Pi से खरीदें और बेचें। हर ऑर्डर एस्क्रो सुरक्षित।',sectionTitle:'🔥 नवीनतम आगमन',escrowProtected:'एस्क्रो संरक्षित',piVerified:'Pi सत्यापित विक्रेता',digitalGoods:'डिजिटल सामान',buying:'खरीदना',selling:'बेचना',recentTransactions:'हाल के लेनदेन',uploadText:'चित्र या PDF अपलोड करें',productIcon:'उत्पाद आइकन',productImages:'उत्पाद छवियाँ / PDF'},
-  zh:{home:'主页',sell:'出售',orders:'订单',wallet:'钱包',profile:'个人资料',myOrders:'我的订单',listProduct:'发布商品',logout:'退出',purchases:'购买',sales:'销售',earned:'收入',notifications:'通知',heroTitle:'欢迎来到商业的未来。',heroSub:'用Pi买卖。每笔订单均受托管保护。',sectionTitle:'🔥 最新到货',escrowProtected:'托管保护',piVerified:'Pi认证卖家',digitalGoods:'数字商品',buying:'购买',selling:'销售',recentTransactions:'最近交易',uploadText:'点击上传图片或PDF',productIcon:'商品图标',productImages:'商品图片 / PDF'},
-  es:{home:'Inicio',sell:'Vender',orders:'Pedidos',wallet:'Billetera',profile:'Perfil',myOrders:'Mis Pedidos',listProduct:'Listar Producto',logout:'Cerrar sesión',purchases:'Compras',sales:'Ventas',earned:'Ganado',notifications:'Notificaciones',heroTitle:'Bienvenido al futuro del comercio.',heroSub:'Compra y vende con Pi. Cada pedido está protegido.',sectionTitle:'🔥 Últimas llegadas',escrowProtected:'Protección Escrow',piVerified:'Vendedores Pi Verificados',digitalGoods:'Bienes Digitales',buying:'Comprando',selling:'Vendiendo',recentTransactions:'Transacciones recientes',uploadText:'Toca para subir imágenes o PDF',productIcon:'Ícono del producto',productImages:'Imágenes / PDF del producto'},
+const statusLabels={
+  en:{pending:'Pending',paid:'Paid',shipped:'Shipped',delivered:'Delivered',completed:'Completed',disputed:'Disputed',refunded:'Refunded'},
+  ta:{pending:'நிலுவை',paid:'பணம் செலுத்தப்பட்டது',shipped:'அனுப்பப்பட்டது',delivered:'டெலிவரி ஆனது',completed:'முடிந்தது',disputed:'தகராறு',refunded:'திரும்பப் பெறப்பட்டது'},
+  hi:{pending:'लंबित',paid:'भुगतान किया',shipped:'भेजा गया',delivered:'डिलीवर हुआ',completed:'पूर्ण',disputed:'विवादित',refunded:'वापसी'},
+  zh:{pending:'待处理',paid:'已付款',shipped:'已发货',delivered:'已送达',completed:'已完成',disputed:'争议中',refunded:'已退款'},
+  es:{pending:'Pendiente',paid:'Pagado',shipped:'Enviado',delivered:'Entregado',completed:'Completado',disputed:'Disputado',refunded:'Reembolsado'},
 };
-// Add more langs as fallback to English
-['ar','fr','de','pt','ru','ja','ko','id','tr','vi','th','ms','tl','bn','ur','sw','pl','nl','it','uk'].forEach(l=>{if(!T[l])T[l]={...T.en};});
+['ar','fr','de','pt','ru','ja','ko','id','tr','vi','th','ms','tl','bn','ur','sw','pl','nl','it','uk'].forEach(l=>{if(!statusLabels[l])statusLabels[l]={...statusLabels.en};});
+
+const T={
+  en:{home:'Home',sell:'Sell',orders:'Orders',wallet:'Wallet',profile:'Profile',myOrders:'My Orders',listProduct:'List a Product',logout:'Logout',purchases:'Purchases',sales:'Sales',earned:'Earned',notifications:'Notifications',heroTitle:'Welcome to the future of Commerce.',heroSub:'Buy & sell with Pi. Every order is escrow protected.',sectionTitle:'🔥 Latest Arrivals',escrowProtected:'Escrow Protected',piVerified:'Pi Verified',digitalGoods:'Digital Goods',buying:'Buying',selling:'Selling',recentTransactions:'Recent Transactions',uploadText:'Tap to upload images or PDF',productIcon:'Product Icon',productImages:'Product Images / PDF',howEscrowWorks:'How Escrow Works',escrowDesc:'When you buy, Pi is locked in escrow. Once you confirm delivery, Pi is released to the seller minus 2% commission. If no confirmation in 7 days, Pi auto-releases to seller.',yourWallet:'YOUR WALLET ADDRESS',copyAddress:'Copy Address',escrowBalance:'ESCROW BALANCE',piHeld:'Pi held pending delivery confirmation'},
+  ta:{home:'முகப்பு',sell:'விற்க',orders:'ஆர்டர்கள்',wallet:'பணப்பை',profile:'சுயவிவரம்',myOrders:'என் ஆர்டர்கள்',listProduct:'பொருள் பதிவிடு',logout:'வெளியேறு',purchases:'கொள்முதல்கள்',sales:'விற்பனைகள்',earned:'சம்பாதித்தது',notifications:'அறிவிப்புகள்',heroTitle:'வர்த்தகத்தின் எதிர்காலத்திற்கு வரவேற்கிறோம்.',heroSub:'பையில் வாங்கவும் விற்கவும். எல்லா ஆர்டரும் எஸ்க்ரோ பாதுகாப்பில்.',sectionTitle:'🔥 சமீபத்திய வருகைகள்',escrowProtected:'எஸ்க்ரோ பாதுகாப்பு',piVerified:'பை சரிபார்க்கப்பட்டது',digitalGoods:'டிஜிட்டல் பொருட்கள்',buying:'வாங்குதல்',selling:'விற்பனை',recentTransactions:'சமீபத்திய பரிவர்த்தனைகள்',uploadText:'படங்கள் அல்லது PDF பதிவேற்றவும்',productIcon:'பொருள் ஐகான்',productImages:'பொருள் படங்கள் / PDF',howEscrowWorks:'எஸ்க்ரோ எப்படி வேலை செய்கிறது',escrowDesc:'நீங்கள் வாங்கும்போது, பை எஸ்க்ரோவில் பூட்டப்படும். டெலிவரியை உறுதிப்படுத்திய பிறகு, 2% கமிஷன் கழித்து விற்பனையாளருக்கு பை வெளியிடப்படும். 7 நாட்களில் உறுதிப்படுத்தல் இல்லை என்றால் தானாக வெளியிடப்படும்.',yourWallet:'உங்கள் வாலட் முகவரி',copyAddress:'முகவரியை நகலெடு',escrowBalance:'எஸ்க்ரோ இருப்பு',piHeld:'டெலிவரி உறுதிப்படுத்தல் நிலுவையில் உள்ள பை'},
+  hi:{home:'होम',sell:'बेचें',orders:'ऑर्डर',wallet:'वॉलेट',profile:'प्रोफाइल',myOrders:'मेरे ऑर्डर',listProduct:'उत्पाद सूचीबद्ध करें',logout:'लॉगआउट',purchases:'खरीदारी',sales:'बिक्री',earned:'कमाई',notifications:'सूचनाएं',heroTitle:'वाणिज्य के भविष्य में आपका स्वागत है।',heroSub:'Pi से खरीदें और बेचें। हर ऑर्डर एस्क्रो सुरक्षित।',sectionTitle:'🔥 नवीनतम आगमन',escrowProtected:'एस्क्रो संरक्षित',piVerified:'Pi सत्यापित',digitalGoods:'डिजिटल सामान',buying:'खरीदना',selling:'बेचना',recentTransactions:'हाल के लेनदेन',uploadText:'चित्र या PDF अपलोड करें',productIcon:'उत्पाद आइकन',productImages:'उत्पाद छवियाँ / PDF',howEscrowWorks:'एस्क्रो कैसे काम करता है',escrowDesc:'जब आप खरीदते हैं, Pi एस्क्रो में लॉक हो जाती है। डिलीवरी की पुष्टि के बाद 2% कमीशन घटाकर Pi विक्रेता को मिलती है। 7 दिन में पुष्टि न हो तो Pi स्वतः रिलीज़।',yourWallet:'आपका वॉलेट पता',copyAddress:'पता कॉपी करें',escrowBalance:'एस्क्रो बैलेंस',piHeld:'डिलीवरी पुष्टि तक Pi होल्ड'},
+};
+['zh','es','ar','fr','de','pt','ru','ja','ko','id','tr','vi','th','ms','tl','bn','ur','sw','pl','nl','it','uk'].forEach(l=>{if(!T[l])T[l]={...T.en};});
 
 const categories=[{id:'all',label:'🌟 All'},{id:'electronics',label:'📱 Electronics'},{id:'fashion',label:'👗 Fashion'},{id:'food',label:'🍕 Food'},{id:'services',label:'🛠️ Services'},{id:'digital',label:'💻 Digital'},{id:'art',label:'🎨 Art'},{id:'books',label:'📚 Books'},{id:'gaming',label:'🎮 Gaming'},{id:'health',label:'💊 Health'},{id:'home',label:'🏠 Home'},{id:'sports',label:'⚽ Sports'},{id:'other',label:'📦 Other'}];
 const emojis=['📱','💻','👗','👟','🎮','📚','🎨','🏠','🍕','💊','⚽','🎵','📷','🔧','💎','🌿','🧸','🎁','🖥️','⌚','🎧','📦','🛍️','🌟'];
 
-// ─── STARS ────────────────────────────────────────────────────────────────────
-function createStars(){
-  const c=document.getElementById('stars');
-  for(let i=0;i<80;i++){
-    const s=document.createElement('div');
-    s.className='star';
-    const size=Math.random()*2+1;
-    s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${Math.random()*4+2}s;--delay:${Math.random()*4}s;opacity:${Math.random()*0.5+0.1};`;
-    c.appendChild(s);
-  }
-}
+// STARS
+function createStars(){const c=document.getElementById('stars');for(let i=0;i<70;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2+1;s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${Math.random()*4+2}s;--delay:${Math.random()*4}s;opacity:${Math.random()*0.5+0.1};`;c.appendChild(s);}}
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
+// INIT
 window.onload=async()=>{
   createStars();
   Pi.init({version:'2.0',sandbox:true});
-  buildCategories();
-  buildEmojiPicker();
-  fetchPiPrice();
+  buildCategories();buildEmojiPicker();fetchPiPrice();
   setInterval(fetchPiPrice,60000);
-  // Auto detect language
   const bl=navigator.language?.split('-')[0];
   if(T[bl]){currentLang=bl;document.getElementById('langSelect').value=bl;applyLang();}
 };
 
-// ─── PI LOGIN ─────────────────────────────────────────────────────────────────
+// LOGIN
 async function loginWithPi(){
-  const btn=document.querySelector('.pi-login-btn');
-  btn.textContent='⏳ Connecting...';
-  btn.disabled=true;
+  const btn=document.getElementById('loginBtn');
+  btn.innerHTML='⏳ Connecting...';btn.disabled=true;
   try{
-    const scopes=['username','payments','wallet_address'];
-    const auth=await Pi.authenticate(scopes,onIncompletePaymentFound);
-    currentUser={
-      piUsername:auth.user.username,
-      piUid:auth.user.uid,
-      isKYC:auth.user.credentials?.verified||false,
-      walletAddress:auth.user.wallet_address||null,
-    };
+    const auth=await Pi.authenticate(['username','payments','wallet_address'],onIncompletePaymentFound);
+    currentUser={piUsername:auth.user.username,piUid:auth.user.uid,isKYC:auth.user.credentials?.verified||false,walletAddress:auth.user.wallet_address||null};
     await fetch(`${BACKEND}/auth`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(currentUser)});
-    // Show admin nav only for admin
-    if(currentUser.piUsername===ADMIN_USERNAME){
-      document.getElementById('adminMenuItem').style.display='flex';
-      document.getElementById('bnav-admin').style.display='flex';
-    }
+    if(currentUser.piUsername===ADMIN_USERNAME){document.getElementById('adminMenuItem').style.display='flex';document.getElementById('bnav-admin').style.display='flex';}
     document.getElementById('loginPage').style.display='none';
     document.getElementById('mainApp').style.display='block';
-    updateNavUser();
-    loadProducts();
-    loadWallet();
+    updateNavUser();loadProducts();loadWallet();
     addNotif('Welcome back, @'+currentUser.piUsername+'! 👋');
+    applyLang();
   }catch(err){
-    btn.innerHTML='<span style="font-size:20px;">π</span> Login with Pi';
-    btn.disabled=false;
+    btn.innerHTML='<span style="font-size:18px;">π</span> Login with Pi';btn.disabled=false;
     showToast('Login failed: '+err.message,'error');
   }
 }
@@ -764,147 +662,95 @@ async function loginWithPi(){
 function updateNavUser(){
   if(!currentUser)return;
   document.getElementById('navName').textContent='@'+currentUser.piUsername;
-  if(currentUser.isKYC)document.getElementById('navKYC').style.display='flex';
+  if(currentUser.isKYC){document.getElementById('navKYC').style.display='block';}
   document.getElementById('profileName').textContent='@'+currentUser.piUsername;
   if(currentUser.isKYC)document.getElementById('profileKYC').style.display='inline-flex';
+  if(currentUser.walletAddress)document.getElementById('walletAddr').textContent=currentUser.walletAddress;
 }
 
 async function onIncompletePaymentFound(payment){
   try{await fetch(`${BACKEND}/payments/complete`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId:payment.identifier,txid:payment.transaction?.txid})});}catch(e){}
 }
 
-// ─── PRODUCTS ─────────────────────────────────────────────────────────────────
+// PRODUCTS
 async function loadProducts(){
   document.getElementById('productsGrid').innerHTML='<div class="loading" style="grid-column:1/-1;"><div class="spinner"></div><span>Loading...</span></div>';
   try{
     let url=`${BACKEND}/products?category=${currentCategory}`;
     const s=document.getElementById('searchInput')?.value;
     if(s)url+=`&search=${encodeURIComponent(s)}`;
-    const res=await fetch(url);
-    allProducts=await res.json();
+    const res=await fetch(url);allProducts=await res.json();
     renderProducts(allProducts);
-  }catch(err){
-    document.getElementById('productsGrid').innerHTML='<div class="empty-state" style="grid-column:1/-1;"><div class="empty-emoji">😕</div><div class="empty-text">Failed to load products</div></div>';
-  }
+  }catch{document.getElementById('productsGrid').innerHTML='<div class="empty-state" style="grid-column:1/-1;"><div class="empty-emoji">😕</div><div class="empty-text">Failed to load products</div></div>';}
 }
 
 function renderProducts(products){
   const grid=document.getElementById('productsGrid');
-  if(!products.length){
-    grid.innerHTML='<div class="empty-state" style="grid-column:1/-1;"><div class="empty-emoji">🔍</div><div class="empty-text">No products yet — be the first to sell 🚀</div></div>';
-    return;
-  }
+  if(!products.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1;"><div class="empty-emoji">🔍</div><div class="empty-text">No products yet — be the first to sell 🚀</div></div>';return;}
   grid.innerHTML=products.map(p=>{
-    const img=p.images&&p.images[0]?`<img src="${escHtml(p.images[0])}" onerror="this.parentElement.textContent='📦'">`:`<span>${p.emoji||'📦'}</span>`;
-    return`<div class="product-card" onclick="openProduct('${p._id}')">
-      <div class="product-img">${img}<div class="product-badge ${p.type==='digital'?'digital':''}">${p.type==='digital'?'💻':'📦'}</div></div>
-      <div class="product-info">
-        <div class="product-title">${escHtml(p.title)}</div>
-        <div class="product-seller">@${escHtml(p.sellerUsername)}</div>
-        <div class="product-price">π ${p.price.toFixed(2)}</div>
-      </div>
-    </div>`;
+    const img=p.images&&p.images[0]?`<img src="${escH(p.images[0])}" onerror="this.parentElement.innerHTML='<span style=font-size:48px>${p.emoji||'📦'}</span>'">`:`<span>${p.emoji||'📦'}</span>`;
+    return`<div class="product-card" onclick="openProduct('${p._id}')"><div class="product-img">${img}<div class="product-badge ${p.type==='digital'?'digital':''}">${p.type==='digital'?'💻':'📦'}</div></div><div class="product-info"><div class="product-title">${escH(p.title)}</div><div class="product-seller">@${escH(p.sellerUsername)}</div><div class="product-price">π ${p.price.toFixed(2)}</div></div></div>`;
   }).join('');
 }
 
 function searchProducts(){loadProducts();}
+function buildCategories(){document.getElementById('categoriesBar').innerHTML=categories.map(c=>`<button class="cat-btn ${c.id==='all'?'active':''}" onclick="filterCat('${c.id}',this)">${c.label}</button>`).join('');}
+function filterCat(cat,el){currentCategory=cat;document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');loadProducts();}
 
-function buildCategories(){
-  document.getElementById('categoriesBar').innerHTML=categories.map(c=>`<button class="cat-btn ${c.id==='all'?'active':''}" onclick="filterCat('${c.id}',this)">${c.label}</button>`).join('');
-}
-
-function filterCat(cat,el){
-  currentCategory=cat;
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  loadProducts();
-}
-
-// ─── PRODUCT DETAIL ───────────────────────────────────────────────────────────
+// PRODUCT DETAIL
 async function openProduct(id){
-  const p=allProducts.find(x=>x._id===id);
-  if(!p)return;
+  const p=allProducts.find(x=>x._id===id);if(!p)return;
   const isMine=currentUser&&p.sellerId===currentUser.piUid;
-  const imgHtml=p.images&&p.images[0]?`<img src="${escHtml(p.images[0])}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.textContent='📦'">`:`<span style="font-size:72px;">${p.emoji||'📦'}</span>`;
+  const imgHtml=p.images&&p.images[0]?`<img src="${escH(p.images[0])}" style="width:100%;height:100%;object-fit:cover;">`:`<span style="font-size:64px;">${p.emoji||'📦'}</span>`;
   document.getElementById('productModalContent').innerHTML=`
     <div class="detail-img">${imgHtml}</div>
-    <div class="modal-title">${escHtml(p.title)}</div>
+    <div class="modal-title">${escH(p.title)}</div>
     <div class="detail-price">π ${p.price.toFixed(2)}</div>
-    <div class="detail-seller">by @${escHtml(p.sellerUsername)} · ${p.type==='digital'?'💻 Digital':'📦 Physical'} · ${escHtml(p.category)}</div>
-    <div class="detail-desc">${escHtml(p.description)}</div>
-    ${isMine?`<button class="action-btn dispute" style="width:100%;margin-bottom:8px;" onclick="deleteProduct('${p._id}')">🗑️ Delete Listing</button>`:`<button class="buy-btn" id="buyBtn" onclick="buyProduct('${p._id}','${escHtml(p.title)}',${p.price},'${p.sellerId}','${escHtml(p.sellerUsername)}')">🛒 Buy for π ${p.price.toFixed(2)}</button>`}
+    <div class="detail-seller">by @${escH(p.sellerUsername)} · ${p.type==='digital'?'💻 Digital':'📦 Physical'} · ${escH(p.category)}</div>
+    <div class="detail-desc">${escH(p.description)}</div>
+    ${isMine?`<button class="abtn abtn-dispute" style="width:100%;" onclick="deleteProduct('${p._id}')">🗑️ Delete Listing</button>`:`<button class="buy-btn" id="buyBtn" onclick="buyProduct('${p._id}','${escH(p.title)}',${p.price},'${p.sellerId}','${escH(p.sellerUsername)}')">🛒 Buy for π ${p.price.toFixed(2)}</button>`}
   `;
   openModal('productModal');
 }
 
 async function deleteProduct(id){
   await fetch(`${BACKEND}/products/${id}`,{method:'DELETE'});
-  closeModal('productModal');loadProducts();showToast('Product deleted ✓','success');
+  closeModal('productModal');loadProducts();showToast('Product deleted','success');
 }
 
-// ─── BUY ──────────────────────────────────────────────────────────────────────
+// BUY
 async function buyProduct(productId,productTitle,amount,sellerId,sellerUsername){
   if(!currentUser){showToast('Please login first','error');return;}
   const btn=document.getElementById('buyBtn');
   if(btn){btn.disabled=true;btn.textContent='⏳ Processing...';}
   try{
-    await Pi.createPayment({
-      amount,
-      memo:`BuyZone Pi: ${productTitle}`,
-      metadata:{productId,sellerId,sellerUsername,buyerId:currentUser.piUid,buyerUsername:currentUser.piUsername,productTitle}
-    },{
-      onReadyForServerApproval:async(paymentId)=>{
-        await fetch(`${BACKEND}/payments/approve`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId,productId,productTitle,buyerId:currentUser.piUid,buyerUsername:currentUser.piUsername,sellerId,sellerUsername,amount})});
-      },
-      onReadyForServerCompletion:async(paymentId,txid)=>{
-        await fetch(`${BACKEND}/payments/complete`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId,txid})});
-        closeModal('productModal');
-        showToast('Payment successful! 🎉','success');
-        addNotif(`You purchased "${productTitle}" for π ${amount}`);
-        showPage('orders');
-      },
-      onCancel:()=>{
-        if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;}
-        showToast('Payment cancelled','error');
-      },
-      onError:(error)=>{
-        if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;}
-        showToast('Payment error: '+error.message,'error');
-      }
+    await Pi.createPayment({amount,memo:`BuyZone Pi: ${productTitle}`,metadata:{productId,sellerId,sellerUsername,buyerId:currentUser.piUid,buyerUsername:currentUser.piUsername,productTitle}},{
+      onReadyForServerApproval:async(paymentId)=>{await fetch(`${BACKEND}/payments/approve`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId,productId,productTitle,buyerId:currentUser.piUid,buyerUsername:currentUser.piUsername,sellerId,sellerUsername,amount})});},
+      onReadyForServerCompletion:async(paymentId,txid)=>{await fetch(`${BACKEND}/payments/complete`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId,txid})});closeModal('productModal');showToast('Payment successful! 🎉','success');addNotif(`You purchased "${productTitle}" for π ${amount}`);showPage('orders');},
+      onCancel:()=>{if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;}showToast('Payment cancelled','error');},
+      onError:(e)=>{if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;}showToast('Payment error: '+e.message,'error');}
     });
-  }catch(err){
-    if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;}
-    showToast('Error: '+err.message,'error');
-  }
+  }catch(err){if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;}showToast('Error: '+err.message,'error');}
 }
 
-// ─── FILE UPLOAD ──────────────────────────────────────────────────────────────
+// FILE UPLOAD
 function handleFiles(input){
-  const files=Array.from(input.files);
-  files.forEach(file=>{
+  Array.from(input.files).forEach(file=>{
     if(file.size>5*1024*1024){showToast('File too large (max 5MB)','error');return;}
-    const reader=new FileReader();
-    reader.onload=e=>{
-      uploadedFiles.push({name:file.name,data:e.target.result,type:file.type});
-      renderPreviews();
-    };
-    reader.readAsDataURL(file);
+    const r=new FileReader();
+    r.onload=e=>{uploadedFiles.push({name:file.name,data:e.target.result,type:file.type});renderPreviews();};
+    r.readAsDataURL(file);
   });
 }
-
 function renderPreviews(){
-  const preview=document.getElementById('uploadPreview');
-  preview.innerHTML=uploadedFiles.map((f,i)=>{
-    if(f.type==='application/pdf'){
-      return`<div class="pdf-preview"><span class="pdf-icon">📄</span><span class="pdf-name">${escHtml(f.name)}</span><button onclick="removeFile(${i})" style="background:var(--red);border:none;color:white;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:10px;margin-left:auto;">✕</button></div>`;
-    }
+  document.getElementById('uploadPreview').innerHTML=uploadedFiles.map((f,i)=>{
+    if(f.type==='application/pdf')return`<div class="pdf-preview"><span style="font-size:20px;">📄</span><span style="font-size:11px;color:var(--text2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escH(f.name)}</span><button onclick="removeFile(${i})" style="background:var(--red);border:none;color:white;border-radius:50%;width:18px;height:18px;cursor:pointer;font-size:9px;flex-shrink:0;">✕</button></div>`;
     return`<div class="preview-item"><img src="${f.data}"><button class="remove-btn" onclick="removeFile(${i})">✕</button></div>`;
   }).join('');
 }
-
 function removeFile(i){uploadedFiles.splice(i,1);renderPreviews();}
 
-// ─── LIST PRODUCT ─────────────────────────────────────────────────────────────
+// LIST PRODUCT
 async function listProduct(){
   const title=document.getElementById('prodTitle').value.trim();
   const desc=document.getElementById('prodDesc').value.trim();
@@ -913,273 +759,128 @@ async function listProduct(){
   const price=parseFloat(document.getElementById('prodPrice').value);
   if(!title||!desc||!category||!price){showToast('Please fill all required fields','error');return;}
   if(!currentUser){showToast('Please login first','error');return;}
-  const btn=document.getElementById('listBtn');
-  btn.disabled=true;btn.textContent='⏳ Listing...';
+  const btn=document.getElementById('listBtn');btn.disabled=true;btn.textContent='⏳ Listing...';
   try{
-    const images=uploadedFiles.map(f=>f.data);
-    await fetch(`${BACKEND}/products`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,description:desc,category,type,price,sellerId:currentUser.piUid,sellerUsername:currentUser.piUsername,images,emoji:selectedEmoji})});
-    showToast('Product listed successfully! 🎉','success');
-    document.getElementById('prodTitle').value='';
-    document.getElementById('prodDesc').value='';
-    document.getElementById('prodPrice').value='';
-    uploadedFiles=[];
-    renderPreviews();
-    addNotif(`Your product "${title}" is now live!`);
-    showPage('browse');loadProducts();
-  }catch(err){showToast('Failed to list product','error');}
+    await fetch(`${BACKEND}/products`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,description:desc,category,type,price,sellerId:currentUser.piUid,sellerUsername:currentUser.piUsername,images:uploadedFiles.map(f=>f.data),emoji:selectedEmoji})});
+    showToast('Product listed! 🎉','success');
+    document.getElementById('prodTitle').value='';document.getElementById('prodDesc').value='';document.getElementById('prodPrice').value='';
+    uploadedFiles=[];renderPreviews();addNotif(`"${title}" is now live!`);showPage('browse');loadProducts();
+  }catch{showToast('Failed to list product','error');}
   btn.disabled=false;btn.textContent='🚀 List Product';
 }
 
-// ─── ORDERS ───────────────────────────────────────────────────────────────────
+// ORDERS
 async function loadOrders(){
   if(!currentUser)return;
   document.getElementById('ordersList').innerHTML='<div class="loading"><div class="spinner"></div></div>';
   try{
-    const endpoint=orderTab==='buying'?'buyer':'seller';
-    const res=await fetch(`${BACKEND}/orders/${endpoint}/${currentUser.piUid}`);
+    const res=await fetch(`${BACKEND}/orders/${orderTab==='buying'?'buyer':'seller'}/${currentUser.piUid}`);
     const orders=await res.json();
-    if(!Array.isArray(orders)||!orders.length){
-      document.getElementById('ordersList').innerHTML='<div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">No orders yet</div></div>';
-      return;
-    }
+    if(!Array.isArray(orders)||!orders.length){document.getElementById('ordersList').innerHTML='<div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">No orders yet</div></div>';return;}
+    const sl=statusLabels[currentLang]||statusLabels.en;
     document.getElementById('ordersList').innerHTML=orders.map(o=>`
       <div class="order-card" onclick="openOrder('${o._id}')">
-        <div class="order-header">
-          <div class="order-title">${escHtml(o.productTitle)}</div>
-          <div class="status-badge s-${o.status}">${o.status}</div>
-        </div>
-        <div class="order-meta">${orderTab==='buying'?'From @'+escHtml(o.sellerUsername):'To @'+escHtml(o.buyerUsername)} · ${new Date(o.createdAt).toLocaleDateString()}</div>
+        <div class="order-header"><div class="order-title">${escH(o.productTitle)}</div><div class="sbadge s-${o.status}">${sl[o.status]||o.status}</div></div>
+        <div class="order-meta">${orderTab==='buying'?'From @'+escH(o.sellerUsername):'To @'+escH(o.buyerUsername)} · ${new Date(o.createdAt).toLocaleDateString()}</div>
         <div class="order-amount">π ${o.amount.toFixed(2)}</div>
-      </div>
-    `).join('');
-  }catch(err){
-    document.getElementById('ordersList').innerHTML='<div class="empty-state"><div class="empty-emoji">😕</div><div class="empty-text">Failed to load orders</div></div>';
-  }
+      </div>`).join('');
+  }catch{document.getElementById('ordersList').innerHTML='<div class="empty-state"><div class="empty-emoji">😕</div><div class="empty-text">Failed to load</div></div>';}
 }
 
-function switchOrderTab(tab,el){
-  orderTab=tab;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  loadOrders();
-}
-
-// Order status step index
-const statusSteps=['pending','paid','shipped','delivered','completed'];
-function getStepIndex(status){return statusSteps.indexOf(status);}
+function switchOrderTab(tab,el){orderTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');loadOrders();}
 
 async function openOrder(id){
   try{
-    const res=await fetch(`${BACKEND}/orders/${id}`);
-    const order=await res.json();
+    const order=await fetch(`${BACKEND}/orders/${id}`).then(r=>r.json());
+    const msgs=await fetch(`${BACKEND}/messages/${id}`).then(r=>r.json());
     const isBuyer=currentUser.piUid===order.buyerId;
     const isSeller=currentUser.piUid===order.sellerId;
-    const msgs=await fetch(`${BACKEND}/messages/${id}`).then(r=>r.json());
-    const step=getStepIndex(order.status);
-
-    // Escrow steps UI
-    const escrowSteps=[
-      {label:'Paid',icon:'💳'},
-      {label:'Shipped',icon:'📦'},
-      {label:'Delivered',icon:'✅'},
-      {label:'Complete',icon:'🎉'},
-    ];
-    const escrowHTML=`
-      <div class="escrow-status">
-        <div style="font-size:12px;font-weight:600;color:var(--purple3);margin-bottom:8px;">🔒 Escrow Status — Pi locked until delivery confirmed</div>
-        <div class="escrow-steps">
-          ${escrowSteps.map((s,i)=>`
-            <div class="escrow-step">
-              <div class="escrow-step-dot ${step>i?'done':step===i+1?'active':''}">${step>i?'✓':s.icon}</div>
-              <div class="escrow-step-label">${s.label}</div>
-            </div>
-            ${i<escrowSteps.length-1?`<div class="escrow-line ${step>i+1?'done':''}"></div>`:''}
-          `).join('')}
-        </div>
-      </div>`;
-
-    // Action buttons based on status and role
+    const sl=statusLabels[currentLang]||statusLabels.en;
+    const steps=[{l:'Paid',i:'💳'},{l:'Shipped',i:'📦'},{l:'Delivered',i:'✅'},{l:'Done',i:'🎉'}];
+    const sidx=['pending','paid','shipped','delivered','completed'].indexOf(order.status);
+    const escrowHTML=`<div class="escrow-steps-wrap"><div class="escrow-steps-title">🔒 Escrow — Pi locked until delivery confirmed</div><div class="escrow-steps">${steps.map((s,i)=>`<div class="estep"><div class="estep-dot ${sidx>i?'done':sidx===i+1?'cur':''}">${sidx>i?'✓':s.i}</div><div class="estep-label">${s.l}</div></div>${i<steps.length-1?`<div class="eline ${sidx>i+1?'done':''}"></div>`:''}`).join('')}</div></div>`;
     let actions='';
-    if(order.status==='paid'&&isSeller)actions+=`<button class="action-btn ship" onclick="shipOrder('${id}')">📦 Mark as Shipped</button>`;
-    if(order.status==='shipped'&&isBuyer)actions+=`<button class="action-btn confirm" onclick="confirmDelivery('${id}')">✅ Confirm Delivery & Release Pi</button>`;
-    if(!['completed','disputed','refunded'].includes(order.status))actions+=`<button class="action-btn dispute" onclick="raiseDispute('${id}')">⚠️ Raise Dispute</button>`;
-
+    if(order.status==='paid'&&isSeller)actions+=`<button class="abtn abtn-ship" onclick="shipOrder('${id}')">📦 Mark as Shipped</button>`;
+    if(order.status==='shipped'&&isBuyer)actions+=`<button class="abtn abtn-confirm" onclick="confirmDelivery('${id}')">✅ Confirm Delivery &amp; Release Pi</button>`;
+    if(!['completed','disputed','refunded'].includes(order.status))actions+=`<button class="abtn abtn-dispute" onclick="raiseDispute('${id}')">⚠️ Raise Dispute</button>`;
     document.getElementById('orderModalContent').innerHTML=`
-      <div class="order-detail-header">
-        <div class="modal-title" style="margin:0;">${escHtml(order.productTitle)}</div>
-        <div class="order-detail-amount">π ${order.amount.toFixed(2)}</div>
-      </div>
-      <div style="display:flex;gap:8px;margin-bottom:12px;">
-        <div class="status-badge s-${order.status}">${order.status}</div>
-        <div style="font-size:11px;color:var(--text3);align-self:center;">${new Date(order.createdAt).toLocaleString()}</div>
-      </div>
-      <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">
-        Buyer: @${escHtml(order.buyerUsername)} → Seller: @${escHtml(order.sellerUsername)}
-      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><div class="modal-title" style="margin:0;">${escH(order.productTitle)}</div><div style="font-family:'Orbitron',sans-serif;font-weight:700;color:var(--gold2);">π ${order.amount.toFixed(2)}</div></div>
+      <div style="display:flex;gap:7px;margin-bottom:10px;"><div class="sbadge s-${order.status}">${sl[order.status]||order.status}</div><div style="font-size:10px;color:var(--text3);align-self:center;">${new Date(order.createdAt).toLocaleString()}</div></div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:10px;">Buyer: @${escH(order.buyerUsername)} → Seller: @${escH(order.sellerUsername)}</div>
       ${escrowHTML}
       ${actions?`<div class="order-actions">${actions}</div>`:''}
-      <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px;">💬 Chat</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;margin-bottom:8px;">💬 Chat</div>
       <div class="chat-wrap">
-        <div class="chat-msgs" id="chatMsgs">
-          ${msgs.map(m=>`
-            <div class="chat-msg ${m.senderId===currentUser.piUid?'mine':'theirs'}">
-              ${escHtml(m.text)}
-              <div class="chat-meta">@${escHtml(m.senderUsername)}</div>
-            </div>
-          `).join('')||'<div style="color:var(--text3);text-align:center;padding:16px;font-size:12px;">No messages yet. Say hi! 👋</div>'}
-        </div>
-        <div class="chat-input-row">
-          <input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMsg('${id}')">
-          <button class="chat-send" onclick="sendMsg('${id}')">➤</button>
-        </div>
-      </div>
-    `;
+        <div class="chat-msgs" id="chatMsgs">${msgs.map(m=>`<div class="chat-msg ${m.senderId===currentUser.piUid?'mine':'theirs'}">${escH(m.text)}<div class="chat-meta">@${escH(m.senderUsername)}</div></div>`).join('')||'<div style="color:var(--text3);text-align:center;padding:14px;font-size:11px;">No messages yet 👋</div>'}</div>
+        <div class="chat-input-row"><input class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMsg('${id}')"><button class="chat-send" onclick="sendMsg('${id}')">➤</button></div>
+      </div>`;
     openModal('orderModal');
-    const cm=document.getElementById('chatMsgs');
-    if(cm)cm.scrollTop=cm.scrollHeight;
-  }catch(err){showToast('Failed to load order','error');}
+    const cm=document.getElementById('chatMsgs');if(cm)cm.scrollTop=cm.scrollHeight;
+  }catch{showToast('Failed to load order','error');}
 }
 
-async function shipOrder(id){
-  await fetch(`${BACKEND}/orders/${id}/ship`,{method:'POST'});
-  closeModal('orderModal');showToast('Marked as shipped! 📦','success');addNotif('Order marked as shipped');loadOrders();
-}
-
+async function shipOrder(id){await fetch(`${BACKEND}/orders/${id}/ship`,{method:'POST'});closeModal('orderModal');showToast('Marked as shipped! 📦','success');addNotif('Order marked as shipped');loadOrders();}
 async function confirmDelivery(id){
-  showConfirm('Confirm Delivery?','This will release Pi to the seller. Only confirm if you received the item!','confirm-ok ok-purple',async()=>{
+  showConfirm('Confirm Delivery?','This will release Pi to the seller. Only confirm if you received the item!','cok cpurple',async()=>{
     await fetch(`${BACKEND}/orders/${id}/confirm`,{method:'POST'});
-    closeModal('orderModal');showToast('Delivery confirmed! Pi released ✅','success');addNotif('Pi released to seller!');loadOrders();loadWallet();
+    closeModal('orderModal');showToast('Pi released to seller ✅','success');addNotif('Pi released to seller!');loadOrders();loadWallet();
   });
 }
-
 async function raiseDispute(id){
-  const reason=prompt('Please describe the issue:');
-  if(!reason)return;
+  const reason=prompt('Please describe the issue:');if(!reason)return;
   await fetch(`${BACKEND}/disputes`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:id,raisedBy:currentUser.piUsername,reason})});
-  closeModal('orderModal');showToast('Dispute raised. Admin will review ⚠️','success');loadOrders();
+  closeModal('orderModal');showToast('Dispute raised ⚠️','success');loadOrders();
 }
-
 async function sendMsg(orderId){
-  const input=document.getElementById('chatInput');
-  const text=input.value.trim();
-  if(!text)return;
-  input.value='';
+  const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;input.value='';
   await fetch(`${BACKEND}/messages`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId,senderId:currentUser.piUid,senderUsername:currentUser.piUsername,text})});
   openOrder(orderId);
 }
 
-// ─── WALLET ───────────────────────────────────────────────────────────────────
+// WALLET
 async function loadWallet(){
   if(!currentUser)return;
-  if(currentUser.walletAddress){
-    document.getElementById('walletAddr').textContent=currentUser.walletAddress;
-  }
+  if(currentUser.walletAddress)document.getElementById('walletAddr').textContent=currentUser.walletAddress;
   try{
-    const [buyRes,sellRes]=await Promise.all([
-      fetch(`${BACKEND}/orders/buyer/${currentUser.piUid}`),
-      fetch(`${BACKEND}/orders/seller/${currentUser.piUid}`)
-    ]);
-    const buys=await buyRes.json();
-    const sells=await sellRes.json();
-    // Escrow = paid but not completed orders (buyer)
-    const escrow=buys.filter(o=>o.status==='paid'||o.status==='shipped').reduce((s,o)=>s+o.amount,0);
+    const[buyRes,sellRes]=await Promise.all([fetch(`${BACKEND}/orders/buyer/${currentUser.piUid}`),fetch(`${BACKEND}/orders/seller/${currentUser.piUid}`)]);
+    const buys=await buyRes.json();const sells=await sellRes.json();
+    const escrow=(Array.isArray(buys)?buys:[]).filter(o=>o.status==='paid'||o.status==='shipped').reduce((s,o)=>s+o.amount,0);
     document.getElementById('escrowBal').textContent=`π ${escrow.toFixed(2)}`;
-    // Transaction list
-    const allOrders=[
-      ...buys.map(o=>({...o,dir:'out'})),
-      ...sells.map(o=>({...o,dir:'in'}))
-    ].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,20);
-    if(!allOrders.length){
-      document.getElementById('txList').innerHTML='<div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">No transactions yet</div></div>';
-      return;
-    }
-    document.getElementById('txList').innerHTML=allOrders.map(o=>`
-      <div class="tx-item">
-        <div class="tx-info">
-          <div class="tx-title">${escHtml(o.productTitle)}</div>
-          <div class="tx-meta">${o.dir==='out'?'To @'+escHtml(o.sellerUsername):'From @'+escHtml(o.buyerUsername)} · ${new Date(o.createdAt).toLocaleDateString()}</div>
-          <div class="tx-meta"><span class="status-badge s-${o.status}" style="font-size:9px;">${o.status}</span></div>
-        </div>
-        <div class="tx-amount ${o.dir==='out'?'tx-out':'tx-in'}">${o.dir==='out'?'-':'+'}π ${o.amount.toFixed(2)}</div>
-      </div>
-    `).join('');
-    // Update profile stats
-    document.getElementById('statBuying').textContent=buys.length;
-    document.getElementById('statSelling').textContent=sells.length;
-    const earned=sells.filter(o=>o.status==='completed').reduce((s,o)=>s+o.amount*0.98,0);
+    const allOrders=[...(Array.isArray(buys)?buys:[]).map(o=>({...o,dir:'out'})),...(Array.isArray(sells)?sells:[]).map(o=>({...o,dir:'in'}))].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,20);
+    const sl=statusLabels[currentLang]||statusLabels.en;
+    document.getElementById('txList').innerHTML=allOrders.length?allOrders.map(o=>`<div class="tx-item"><div class="tx-info"><div class="tx-title">${escH(o.productTitle)}</div><div class="tx-meta">${o.dir==='out'?'To @'+escH(o.sellerUsername):'From @'+escH(o.buyerUsername)} · ${new Date(o.createdAt).toLocaleDateString()}</div><div class="tx-meta"><span class="sbadge s-${o.status}" style="font-size:9px;">${sl[o.status]||o.status}</span></div></div><div class="tx-amount ${o.dir==='out'?'tx-out':'tx-in'}">${o.dir==='out'?'-':'+'}π ${o.amount.toFixed(2)}</div></div>`).join(''):'<div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">No transactions yet</div></div>';
+    document.getElementById('statBuying').textContent=Array.isArray(buys)?buys.length:0;
+    document.getElementById('statSelling').textContent=Array.isArray(sells)?sells.length:0;
+    const earned=(Array.isArray(sells)?sells:[]).filter(o=>o.status==='completed').reduce((s,o)=>s+o.amount*0.98,0);
     document.getElementById('statEarned').textContent=earned.toFixed(2)+'π';
-  }catch(e){}
+  }catch(e){console.error(e);}
 }
+function copyWallet(){navigator.clipboard?.writeText(document.getElementById('walletAddr').textContent);showToast('Copied! 📋','success');}
 
-function copyWallet(){
-  const addr=document.getElementById('walletAddr').textContent;
-  navigator.clipboard?.writeText(addr);
-  showToast('Wallet address copied! 📋','success');
-}
-
-// ─── PROFILE ──────────────────────────────────────────────────────────────────
-async function updateProfile(){
-  if(!currentUser)return;
-  updateNavUser();
-  await loadWallet();
-}
-
-// ─── ADMIN ────────────────────────────────────────────────────────────────────
-function showAdminLogin(){showPage('admin');}
-
+// ADMIN
 function verifyAdminPw(){
-  const pw=document.getElementById('adminPwInput').value;
-  if(pw===ADMIN_PASSWORD){
+  if(document.getElementById('adminPwInput').value===ADMIN_PASSWORD){
     document.getElementById('adminLoginSection').style.display='none';
     document.getElementById('adminContent').style.display='block';
-    adminVerified=true;
-    loadAdminData();
-  }else{
-    showToast('Wrong password','error');
-  }
+    adminVerified=true;loadAdminData();
+  }else{showToast('Wrong password','error');}
 }
-
 async function loadAdminData(){
   try{
-    const[stats,orders,disputes]=await Promise.all([
-      fetch(`${BACKEND}/admin/stats`).then(r=>r.json()),
-      fetch(`${BACKEND}/admin/orders`).then(r=>r.json()),
-      fetch(`${BACKEND}/admin/disputes`).then(r=>r.json()),
-    ]);
-    document.getElementById('adminStats').innerHTML=`
-      <div class="admin-card"><div class="admin-card-label">Total Users</div><div class="admin-card-val">${stats.users}</div></div>
-      <div class="admin-card"><div class="admin-card-label">Products</div><div class="admin-card-val">${stats.products}</div></div>
-      <div class="admin-card"><div class="admin-card-label">Orders</div><div class="admin-card-val">${stats.orders}</div></div>
-      <div class="admin-card"><div class="admin-card-label">Commission π</div><div class="admin-card-val">${(stats.totalRevenue*0.02).toFixed(2)}</div></div>
-    `;
-    document.getElementById('adminOrders').innerHTML=orders.slice(0,15).map(o=>`
-      <div class="order-card">
-        <div class="order-header"><div class="order-title">${escHtml(o.productTitle)}</div><div class="status-badge s-${o.status}">${o.status}</div></div>
-        <div class="order-meta">@${escHtml(o.buyerUsername)} → @${escHtml(o.sellerUsername)}</div>
-        <div class="order-amount">π ${o.amount.toFixed(2)}</div>
-      </div>
-    `).join('')||'<div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">No orders</div></div>';
-    document.getElementById('adminDisputes').innerHTML=disputes.filter(d=>d.status==='open').map(d=>`
-      <div class="order-card">
-        <div class="order-header"><div class="order-title">Dispute</div><span class="status-badge s-disputed">open</span></div>
-        <div class="order-meta">By @${escHtml(d.raisedBy)}: ${escHtml(d.reason)}</div>
-        <button class="action-btn confirm" style="width:100%;margin-top:8px;" onclick="resolveDispute('${d._id}')">✅ Resolve</button>
-      </div>
-    `).join('')||'<div class="empty-state"><div class="empty-emoji">✅</div><div class="empty-text">No open disputes</div></div>';
+    const[stats,orders,disputes]=await Promise.all([fetch(`${BACKEND}/admin/stats`).then(r=>r.json()),fetch(`${BACKEND}/admin/orders`).then(r=>r.json()),fetch(`${BACKEND}/admin/disputes`).then(r=>r.json())]);
+    document.getElementById('adminStats').innerHTML=`<div class="admin-card"><div class="admin-card-label">Users</div><div class="admin-card-val">${stats.users}</div></div><div class="admin-card"><div class="admin-card-label">Products</div><div class="admin-card-val">${stats.products}</div></div><div class="admin-card"><div class="admin-card-label">Orders</div><div class="admin-card-val">${stats.orders}</div></div><div class="admin-card"><div class="admin-card-label">Commission π</div><div class="admin-card-val">${(stats.totalRevenue*0.02).toFixed(2)}</div></div>`;
+    const sl=statusLabels[currentLang]||statusLabels.en;
+    document.getElementById('adminOrders').innerHTML=orders.slice(0,15).map(o=>`<div class="order-card"><div class="order-header"><div class="order-title">${escH(o.productTitle)}</div><div class="sbadge s-${o.status}">${sl[o.status]||o.status}</div></div><div class="order-meta">@${escH(o.buyerUsername)} → @${escH(o.sellerUsername)}</div><div class="order-amount">π ${o.amount.toFixed(2)}</div></div>`).join('')||'<div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">No orders</div></div>';
+    document.getElementById('adminDisputes').innerHTML=disputes.filter(d=>d.status==='open').map(d=>`<div class="order-card"><div class="order-header"><div class="order-title">Dispute</div><span class="sbadge s-disputed">open</span></div><div class="order-meta">By @${escH(d.raisedBy)}: ${escH(d.reason)}</div><button class="abtn abtn-confirm" style="width:100%;margin-top:7px;" onclick="resolveDispute('${d._id}')">✅ Resolve</button></div>`).join('')||'<div class="empty-state"><div class="empty-emoji">✅</div><div class="empty-text">No open disputes</div></div>';
   }catch{showToast('Failed to load admin data','error');}
 }
+async function resolveDispute(id){await fetch(`${BACKEND}/admin/disputes/${id}/resolve`,{method:'POST'});showToast('Resolved ✅','success');loadAdminData();}
 
-async function resolveDispute(id){
-  await fetch(`${BACKEND}/admin/disputes/${id}/resolve`,{method:'POST'});
-  showToast('Dispute resolved ✅','success');loadAdminData();
-}
-
-// ─── PI PRICE ─────────────────────────────────────────────────────────────────
+// PI PRICE
 async function fetchPiPrice(){
   try{
-    const res=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pi-network&vs_currencies=usd,inr,eur,gbp,aed,jpy,krw');
-    const d=await res.json();
-    const p=d['pi-network']||{};
+    const res=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pi-network&vs_currencies=usd,inr,eur,gbp,aed,jpy,krw,sgd');
+    const d=await res.json();const p=d['pi-network']||{};
     if(p.usd){
       document.getElementById('t-usd').textContent=`$${p.usd.toFixed(3)}`;
       document.getElementById('t-inr').textContent=`₹${p.inr?.toFixed(2)||'0'}`;
@@ -1187,107 +888,55 @@ async function fetchPiPrice(){
       document.getElementById('t-gbp').textContent=`£${p.gbp?.toFixed(3)||'0'}`;
       document.getElementById('t-aed').textContent=`${p.aed?.toFixed(3)||'0'}`;
       document.getElementById('t-jpy').textContent=`¥${p.jpy?.toFixed(2)||'0'}`;
-      document.getElementById('t-krw').textContent=`₩${p.krw?.toFixed(0)||'0'}`;
+      document.getElementById('t-krw').textContent=`₩${Math.round(p.krw||0)}`;
+      document.getElementById('t-sgd').textContent=`S$${p.sgd?.toFixed(3)||'0'}`;
     }
   }catch{}
 }
 
-// ─── LANGUAGE ─────────────────────────────────────────────────────────────────
+// LANGUAGE
 function changeLang(lang){currentLang=lang;applyLang();}
 function applyLang(){
   const t=T[currentLang]||T.en;
-  document.querySelectorAll('[data-t]').forEach(el=>{
-    const key=el.getAttribute('data-t');
-    if(t[key])el.textContent=t[key];
-  });
+  document.querySelectorAll('[data-t]').forEach(el=>{const k=el.getAttribute('data-t');if(t[k])el.textContent=t[k];});
   if(t.heroTitle)document.getElementById('heroTitle').textContent=t.heroTitle;
   if(t.heroSub)document.getElementById('heroSub').textContent=t.heroSub;
   if(t.sectionTitle)document.getElementById('sectionTitle').textContent=t.sectionTitle;
+  // re-render orders if on orders page to update status labels
+  if(document.getElementById('ordersPage').classList.contains('active'))loadOrders();
+  if(document.getElementById('walletPage').classList.contains('active'))loadWallet();
 }
 
-// ─── EMOJI PICKER ─────────────────────────────────────────────────────────────
-function buildEmojiPicker(){
-  document.getElementById('emojiPicker').innerHTML=emojis.map(e=>`<div class="emoji-opt ${e==='📦'?'sel':''}" onclick="selectEmoji('${e}',this)">${e}</div>`).join('');
-}
-function selectEmoji(e,el){
-  selectedEmoji=e;
-  document.querySelectorAll('.emoji-opt').forEach(x=>x.classList.remove('sel'));
-  el.classList.add('sel');
-}
+// EMOJI PICKER
+function buildEmojiPicker(){document.getElementById('emojiPicker').innerHTML=emojis.map(e=>`<div class="emoji-opt ${e==='📦'?'sel':''}" onclick="selectEmoji('${e}',this)">${e}</div>`).join('');}
+function selectEmoji(e,el){selectedEmoji=e;document.querySelectorAll('.emoji-opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
 
-// ─── UI HELPERS ───────────────────────────────────────────────────────────────
+// UI
 function showPage(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
-  const pmap={browse:'browsePage',sell:'sellPage',orders:'ordersPage',wallet:'walletPage',profile:'profilePage',admin:'adminPage'};
-  const nmap={browse:'bnav-browse',sell:'bnav-sell',orders:'bnav-orders',wallet:'bnav-wallet',profile:'bnav-profile',admin:'bnav-admin'};
-  document.getElementById(pmap[page])?.classList.add('active');
-  if(nmap[page])document.getElementById(nmap[page])?.classList.add('active');
+  const pm={browse:'browsePage',sell:'sellPage',orders:'ordersPage',wallet:'walletPage',profile:'profilePage',admin:'adminPage'};
+  const nm={browse:'bnav-browse',sell:'bnav-sell',orders:'bnav-orders',wallet:'bnav-wallet',profile:'bnav-profile',admin:'bnav-admin'};
+  document.getElementById(pm[page])?.classList.add('active');
+  if(nm[page])document.getElementById(nm[page])?.classList.add('active');
   if(page==='orders')loadOrders();
-  if(page==='profile')updateProfile();
+  if(page==='profile'){loadWallet();}
   if(page==='browse')loadProducts();
   if(page==='wallet')loadWallet();
-  window.scrollTo(0,0);
-  applyLang();
+  if(page==='admin'&&!adminVerified){document.getElementById('adminLoginSection').style.display='block';document.getElementById('adminContent').style.display='none';}
+  window.scrollTo(0,0);applyLang();
 }
-
 function openModal(id){document.getElementById(id).classList.add('active');}
 function closeModal(id){document.getElementById(id).classList.remove('active');}
-
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast show '+type;
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-function addNotif(msg){
-  notifications.unshift({msg,time:new Date().toLocaleTimeString()});
-  document.getElementById('notifDot').style.display='block';
-  const list=document.getElementById('notifList');
-  if(notifications.length){
-    list.innerHTML=notifications.slice(0,8).map(n=>`<div class="notif-item">${n.msg}<div style="font-size:10px;color:var(--text3);margin-top:3px;">${n.time}</div></div>`).join('');
-  }
-}
-
-function toggleNotif(){
-  document.getElementById('notifPanel').classList.toggle('active');
-  document.getElementById('notifDot').style.display='none';
-}
-
-function confirmLogout(){
-  showConfirm('Logout?','Are you sure you want to logout from BuyZone Pi?','confirm-ok',()=>{
-    currentUser=null;adminVerified=false;
-    document.getElementById('mainApp').style.display='none';
-    document.getElementById('loginPage').style.display='block';
-    document.querySelector('.pi-login-btn').innerHTML='<span style="font-size:20px;">π</span> Login with Pi';
-    document.querySelector('.pi-login-btn').disabled=false;
-  });
-}
-
-function showConfirm(title,msg,btnClass,onOk){
-  document.getElementById('confirmTitle').textContent=title;
-  document.getElementById('confirmMsg').textContent=msg;
-  const btn=document.getElementById('confirmOkBtn');
-  btn.className=btnClass;
-  btn.onclick=()=>{closeConfirm();onOk();};
-  document.getElementById('confirmOverlay').classList.add('active');
-}
+function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>t.classList.remove('show'),3000);}
+function addNotif(msg){notifications.unshift({msg,time:new Date().toLocaleTimeString()});document.getElementById('notifDot').style.display='block';document.getElementById('notifList').innerHTML=notifications.slice(0,8).map(n=>`<div class="notif-item">${n.msg}<div class="notif-time">${n.time}</div></div>`).join('');}
+function toggleNotif(){document.getElementById('notifPanel').classList.toggle('active');document.getElementById('notifDot').style.display='none';}
+function confirmLogout(){showConfirm('Logout?','Are you sure you want to logout from BuyZone Pi?','cok',()=>{currentUser=null;adminVerified=false;document.getElementById('mainApp').style.display='none';document.getElementById('loginPage').style.display='block';document.getElementById('loginBtn').innerHTML='<span style="font-size:18px;">π</span> Login with Pi';document.getElementById('loginBtn').disabled=false;});}
+function showConfirm(title,msg,btnClass,onOk){document.getElementById('confirmTitle').textContent=title;document.getElementById('confirmMsg').textContent=msg;const btn=document.getElementById('confirmOkBtn');btn.className=btnClass;btn.onclick=()=>{closeConfirm();onOk();};document.getElementById('confirmOverlay').classList.add('active');}
 function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('active');}
-
-function escHtml(str){
-  if(!str)return'';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// Close modals on overlay click
-document.querySelectorAll('.modal-overlay').forEach(o=>{
-  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('active');});
-});
-// Close notif on outside click
-document.addEventListener('click',e=>{
-  const p=document.getElementById('notifPanel');
-  if(!p.contains(e.target)&&!e.target.closest('#notifBtn'))p.classList.remove('active');
-});
+function escH(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('active');}));
+document.addEventListener('click',e=>{const p=document.getElementById('notifPanel');if(!p.contains(e.target)&&!e.target.closest('#notifBtn'))p.classList.remove('active');});
 </script>
 </body>
 </html>
