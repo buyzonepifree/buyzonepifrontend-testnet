@@ -34,6 +34,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
 .lang-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px 6px;border-radius:7px;font-size:10px;cursor:pointer;font-family:'Exo 2',sans-serif;outline:none;max-width:70px;}
 .lang-select option{background:var(--bg2);}
+.contact-wrap{position:relative;}
+.contact-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:5px 9px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'Exo 2',sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.contact-btn:hover{border-color:var(--purple);}
+.contact-dropdown{position:fixed;top:52px;right:10px;width:220px;background:var(--bg2);border:1px solid var(--border2);border-radius:13px;padding:10px;z-index:150;display:none;box-shadow:var(--shadow);animation:fadeIn 0.2s ease;}
+.contact-dropdown.active{display:block;}
+.contact-header{display:flex;align-items:center;gap:8px;padding:8px 10px 10px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.contact-logo{width:32px;height:32px;border-radius:8px;}
+.contact-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;background:linear-gradient(135deg,var(--purple3),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.contact-sub{font-size:9px;color:var(--text3);}
+.contact-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;text-decoration:none;color:var(--text2);font-size:12px;font-weight:500;transition:all 0.2s;}
+.contact-item:hover{background:var(--card2);color:var(--text);}
+.contact-item-icon{font-size:16px;width:20px;text-align:center;}
 
 /* PRICE TICKER */
 .price-ticker{background:var(--bg2);border-bottom:1px solid var(--border);padding:5px 0;overflow:hidden;position:relative;z-index:10;}
@@ -348,6 +360,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <option value="pl">PL</option><option value="nl">NL</option><option value="it">IT</option>
       <option value="uk">UK</option>
     </select>
+    <div class="contact-wrap">
+      <button class="contact-btn" onclick="toggleContact()" id="contactBtn">📬 Contact ▾</button>
+    </div>
     <button class="notif-btn" onclick="toggleNotif()" id="notifBtn">🔔<div class="notif-dot" id="notifDot"></div></button>
     <div class="nav-user" id="navUser" onclick="showPage('profile')">
       <div class="nav-user-avatar" id="navAvatar">👤</div>
@@ -378,6 +393,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <span class="ticker-item"><span class="ticker-flag">🇰🇷</span><span class="ticker-label">KRW</span><span class="ticker-val">₩0</span></span>
     <span class="ticker-item"><span class="ticker-flag">🇸🇬</span><span class="ticker-label">SGD</span><span class="ticker-val">S$0.00</span></span>
   </div>
+</div>
+
+<!-- CONTACT DROPDOWN -->
+<div class="contact-dropdown" id="contactDropdown">
+  <div class="contact-header">
+    <img class="contact-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMCIgZmlsbD0iIzFhMDUzMyIvPjxwYXRoIGQ9Ik0gMTIwIDE0MCBMIDE0OCAxNDAgTCAxNzggMjgwIEwgMzcwIDI4MCBMIDM5NSAxNzUgTCAxNzAgMTc1IiBmaWxsPSJub25lIiBzdHJva2U9IiM5YjVjZjYiIHN0cm9rZS13aWR0aD0iMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjIxNSIgY3k9IjMxNSIgcj0iMjIiIGZpbGw9IiM5YjVjZjYiLz48Y2lyY2xlIGN4PSIyMTUiIGN5PSIzMTUiIHI9IjEwIiBmaWxsPSIjMWEwNTMzIi8+PGNpcmNsZSBjeD0iMzQwIiBjeT0iMzE1IiByPSIyMiIgZmlsbD0iIzliNWNmNiIvPjxjaXJjbGUgY3g9IjM0MCIgY3k9IjMxNSIgcj0iMTAiIGZpbGw9IiMxYTA1MzMiLz48bGluZSB4MT0iMjM1IiB5MT0iMTk4IiB4Mj0iMzE1IiB5Mj0iMTk4IiBzdHJva2U9IiNmNTllMGIiIHN0cm9rZS13aWR0aD0iMTQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIyNDgiIHkxPSIxOTgiIHgyPSIyNDQiIHkyPSIyNjAiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjMwMiIgeTE9IjE5OCIgeDI9IjMwMiIgeTI9IjI2MCIgc3Ryb2tlPSIjZjU5ZTBiIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=" alt="logo">
+    <div>
+      <div class="contact-title">BuyZone Pi</div>
+      <div class="contact-sub">Pi Network Marketplace · v1.0</div>
+    </div>
+  </div>
+  <a class="contact-item" href="mailto:buybypiinpizone@gmail.com"><span class="contact-item-icon">✉️</span> buybypiinpizone@gmail.com</a>
+  <a class="contact-item" href="https://twitter.com/BuyZonePi" target="_blank"><span class="contact-item-icon">𝕏</span> @BuyZonePi</a>
+  <a class="contact-item" href="https://www.facebook.com/profile.php?id=61576492460390" target="_blank"><span class="contact-item-icon">📘</span> BuyZone Pi</a>
+  <a class="contact-item" href="https://www.instagram.com/buybypiinpizone/" target="_blank"><span class="contact-item-icon">📸</span> @buybypiinpizone</a>
+  <a class="contact-item" href="https://www.threads.net/@buybypiinpizone" target="_blank"><span class="contact-item-icon">🧵</span> @buybypiinpizone</a>
 </div>
 
 <!-- NOTIF PANEL -->
@@ -930,13 +961,19 @@ function openModal(id){document.getElementById(id).classList.add('active');}
 function closeModal(id){document.getElementById(id).classList.remove('active');}
 function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>t.classList.remove('show'),3000);}
 function addNotif(msg){notifications.unshift({msg,time:new Date().toLocaleTimeString()});document.getElementById('notifDot').style.display='block';document.getElementById('notifList').innerHTML=notifications.slice(0,8).map(n=>`<div class="notif-item">${n.msg}<div class="notif-time">${n.time}</div></div>`).join('');}
+function toggleContact(){document.getElementById('contactDropdown').classList.toggle('active');document.getElementById('notifPanel').classList.remove('active');}
 function toggleNotif(){document.getElementById('notifPanel').classList.toggle('active');document.getElementById('notifDot').style.display='none';}
 function confirmLogout(){showConfirm('Logout?','Are you sure you want to logout from BuyZone Pi?','cok',()=>{currentUser=null;adminVerified=false;document.getElementById('mainApp').style.display='none';document.getElementById('loginPage').style.display='block';document.getElementById('loginBtn').innerHTML='<span style="font-size:18px;">π</span> Login with Pi';document.getElementById('loginBtn').disabled=false;});}
 function showConfirm(title,msg,btnClass,onOk){document.getElementById('confirmTitle').textContent=title;document.getElementById('confirmMsg').textContent=msg;const btn=document.getElementById('confirmOkBtn');btn.className=btnClass;btn.onclick=()=>{closeConfirm();onOk();};document.getElementById('confirmOverlay').classList.add('active');}
 function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('active');}
 function escH(str){if(!str)return'';return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('active');}));
-document.addEventListener('click',e=>{const p=document.getElementById('notifPanel');if(!p.contains(e.target)&&!e.target.closest('#notifBtn'))p.classList.remove('active');});
+document.addEventListener('click',e=>{
+  const p=document.getElementById('notifPanel');
+  const cd=document.getElementById('contactDropdown');
+  if(!p.contains(e.target)&&!e.target.closest('#notifBtn'))p.classList.remove('active');
+  if(cd&&!cd.contains(e.target)&&!e.target.closest('#contactBtn'))cd.classList.remove('active');
+});
 </script>
 </body>
 </html>
