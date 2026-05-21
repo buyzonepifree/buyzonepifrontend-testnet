@@ -799,9 +799,22 @@ function handleFiles(input){
         productTitle
       }
     }, {
-      onReadyForServerApproval: async (paymentId) => {
-        await fetch(`${BACKEND}/payments/approve`, {
-          method: 'POST',
+   onReadyForServerApproval: (paymentId) => {
+  fetch(`${BACKEND}/payments/approve`, {  // ← NO async, NO await
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      paymentId,
+      productId,
+      productTitle,
+      buyerId: currentUser.piUid,
+      buyerUsername: currentUser.piUsername,
+      sellerId,
+      sellerUsername,
+      amount
+    })
+  }); // just fire — don't wait for response
+},
           headers: {'Content-Type':'application/json'},
           body: JSON.stringify({
             paymentId, productId, productTitle,
