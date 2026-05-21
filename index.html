@@ -769,6 +769,48 @@ async function deleteProduct(id){
 }
 
 // BUY
+async function buyProduct(productId, productTitle, amount, sellerId, sellerUsername) {
+  if(!currentUser){ showToast('Please login first','error'); return; }
+  const btn = document.getElementById('buyBtn');
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Waking server...'; }
+  try { await fetch(`${BACKEND}/ping`); await new Promise(r=>setTimeout(r,2000)); } catch(e){}
+  if(btn) btn.textContent='⏳ Processing...';
+  try {
+    await Pi.createPayment({
+      amount, memo:`BuyZone Pi: ${productTitle}`,
+      metadata:{productId,sellerId,sellerUsername,buyerId:currentUser.piUid,buyerUsername:currentUser.piUsername,productTitle}
+    },{
+      onReadyForServerApproval: (paymentId) => {
+        fetch(`${BACKEND}/payments/approve`,{
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({paymentId,productId,productTitle,buyerId:currentUser.piUid,buyerUsername:currentUser.piUsername,sellerId,sellerUsername,amount})
+        }); // NO await — fire and forget!
+      },
+      onReadyForServerCompletion: async (paymentId, txid) => {
+        await fetch(`${BACKEND}/payments/complete`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentId,txid})});
+        closeModal('productModal');
+        showToast('Payment successful! 🎉','success');
+        addNotif(`You purchased "${productTitle}" for π ${amount}`);
+        showPage('orders');
+      },
+      onCancel: ()=>{ if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;} showToast('Payment cancelled','error'); },
+      onError: (e)=>{ if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;} showToast('Payment error: '+e.message,'error'); }
+    });
+  } catch(err){
+    if(btn){btn.disabled=false;btn.textContent=`🛒 Buy for π ${amount}`;}
+    showToast('Error: '+err.message,'error');
+  }
+}
+
+// FILE UPLOAD
+function handleFiles(input){
+  Array.from(input.files).forEach(file=>{
+    if(file.size>5*1024*1024){showToast('File too large (max 5MB)','error');return;}
+    const r=new FileReader();
+    r.onload=e=>{uploadedFiles.push({name:file.name,data:e.target.result,type:file.type});renderPreviews();};
+    r.readAsDataURL(file);
+  });
+}
 
 // FILE UPLOAD
 function handleFiles(input){
